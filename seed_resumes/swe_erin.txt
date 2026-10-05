@@ -1,0 +1,4 @@
+Name: Erin Fox
+Role: Software Engineer
+Skills: Python, LangChain, OpenAI, vector DBs
+Experience: 4 years AI apps

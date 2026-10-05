@@ -1,0 +1,4 @@
+Name: Cara Nguyen
+Role: Software Engineer
+Skills: Python, FastAPI, AWS, pytest
+Experience: 3 years backend

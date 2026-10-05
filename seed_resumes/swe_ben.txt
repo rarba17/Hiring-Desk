@@ -1,0 +1,4 @@
+Name: Ben Cole
+Role: Software Engineer
+Skills: Python, React, Postgres, Docker
+Experience: 4 years full-stack

@@ -1,0 +1,4 @@
+Name: Anna Patel
+Role: Software Engineer
+Skills: Python, FastAPI, LangChain, LLM apps, AWS
+Experience: 5 years building APIs and AI workers

@@ -1,0 +1,4 @@
+Name: Grace Liu
+Role: Software Engineer
+Skills: Python, FastAPI, React, AWS
+Experience: 6 years platform

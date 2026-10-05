@@ -1,0 +1,4 @@
+Name: Hugo Ray
+Role: Software Engineer
+Skills: Go, Kubernetes
+Experience: 3 years infra

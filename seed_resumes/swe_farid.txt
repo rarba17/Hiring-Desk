@@ -1,0 +1,4 @@
+Name: Farid Khan
+Role: Software Engineer
+Skills: HTML, CSS, support
+Experience: 1 year intern
