@@ -9,7 +9,8 @@ NL instruction -> screen resumes, schedule panel interviews, send confirmations,
 | ATS mock | done |
 | Resumes / calendars | done |
 | Planner / screener | done |
-| Scheduler | in progress |
+| Scheduler | done |
+| Verifier | in progress |
 | Resumes / calendars | queued |
 | Planner / screener | queued |
 | Scheduler / verifier | queued |
