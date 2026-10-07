@@ -12,7 +12,8 @@ NL instruction -> screen resumes, schedule panel interviews, send confirmations,
 | Scheduler | done |
 | Verifier | done |
 | LangGraph supervisor | done |
-| Hiring API | in progress |
+| Hiring API | done |
+| Docker + demo | in progress |
 | Resumes / calendars | queued |
 | Planner / screener | queued |
 | Scheduler / verifier | queued |
