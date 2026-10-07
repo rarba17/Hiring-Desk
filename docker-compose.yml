@@ -1,0 +1,6 @@
+services:
+  api:
+    build: .
+    ports: ["8000:8000"]
+    env_file: .env
+    volumes: ["./seed_resumes:/app/seed_resumes", "./calendars:/app/calendars", "./ats.db:/app/ats.db"]
