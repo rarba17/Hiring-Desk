@@ -10,7 +10,9 @@ NL instruction -> screen resumes, schedule panel interviews, send confirmations,
 | Resumes / calendars | done |
 | Planner / screener | done |
 | Scheduler | done |
-| Verifier | in progress |
+| Verifier | done |
+| LangGraph supervisor | done |
+| Hiring API | in progress |
 | Resumes / calendars | queued |
 | Planner / screener | queued |
 | Scheduler / verifier | queued |
