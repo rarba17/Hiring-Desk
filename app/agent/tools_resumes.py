@@ -49,22 +49,35 @@ def read_resume(resume_dir: str, filename: str) -> Dict[str, Any]:
             "years": yrs}
 
 def _jd_keywords(jd_text: str) -> List[str]:
-    """Skill-first extraction: comma-separated Skills/Requirements lines win.
-    Falls back to distinctive words (generic filler excluded)."""
+    """Skill-first extraction: Skills/Technical-Stack sections (bullets included)
+    win. Falls back to distinctive words (generic filler excluded)."""
     stop = {"and", "or", "the", "with", "for", "years", "year", "experience",
             "must", "have", "plus", "strong", "role", "skills", "requirements",
             "summary", "design", "implement", "monitor", "robust", "core",
             "build", "real", "time", "work", "team", "ability", "including",
             "using", "used", "within", "across", "such", "will", "our"}
+    stack_labels = ("skills", "requirements", "must have", "tech stack", "technical stack",
+                    "core expertise", "languages", "frameworks", "databases", "tools")
     skills: List[str] = []
-    for ln in jd_text.splitlines():
-        if re.match(r"\s*(skills|requirements|must have|tech stack|core expertise)\b", ln, re.I):
+    in_stack = False
+    for raw in jd_text.splitlines():
+        ln = re.sub(r"^[\s•*\-–—>]+", "", raw).strip()
+        if not ln:
+            in_stack = False
+            continue
+        if re.match(r"(" + "|".join(stack_labels) + r")\b", ln, re.I):
+            in_stack = True
             chunk = re.split(r":", ln, maxsplit=1)[-1]
-            for part in re.split(r"[,|/]", chunk):
-                w = part.strip().lower()
-                w = re.sub(r"\(.*?\)", "", w).strip()
-                if 2 <= len(w) <= 30 and w not in stop:
-                    skills.append(w)
+        elif in_stack and re.match(r"[•*\-–—]", raw.strip()[:1]):
+            chunk = re.split(r":", ln, maxsplit=1)[-1]
+        else:
+            in_stack = False
+            continue
+        for part in re.split(r"[,|/]", chunk):
+            w = re.sub(r"\(.*?\)", "", part).strip().lower()
+            w = re.sub(r"[()]", "", w).strip()
+            if 2 <= len(w) <= 30 and w not in stop:
+                skills.append(w)
     if skills:
         seen, out = set(), []
         for w in skills:
@@ -128,6 +141,24 @@ def score_resume(text: str, jd_text: str = "", role: str = "software engineer",
             "matched": hits[:10], "jd_keywords": kws[:10], "reason": reason}
 
 def jd_key(role: str) -> str:
+    # engineer ~ developer: "Python Backend Engineer" and "Python Backend
+    # Developer" are the same role and must resolve to one file.
+    norm = (role or "").strip().lower()
+    norm = re.sub(r"\bengineers?\b", "developer", norm)
+    return re.sub(r"[^a-z0-9]+", "_", norm).strip("_") or "default"
+
+def role_core_tokens(role: str) -> List[str]:
+    filler = {"engineer", "developer", "senior", "junior", "lead", "staff", "top"}
+    return [t for t in re.findall(r"[a-z0-9]+", (role or "").lower())
+            if t not in filler and len(t) > 2]
+
+def resume_role_affinity(info: Dict[str, Any], filename: str, core: List[str]) -> bool:
+    """Does this resume look like an applicant for the role? Checks filename
+    plus header lines (titles live up top; skill sections come later)."""
+    if not core:
+        return True
+    hay = (filename + "\n" + "\n".join(info["text"].splitlines()[:6])).lower()
+    return any(t in hay for t in core)
     # engineer ~ developer: "Python Backend Engineer" and "Python Backend
     # Developer" are the same role and must resolve to one file.
     norm = (role or "").strip().lower()

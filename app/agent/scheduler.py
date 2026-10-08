@@ -2,7 +2,7 @@
 import time
 from pathlib import Path
 from .state import HireState
-from .tools_resumes import list_resumes, read_resume, score_resume, find_slots, send_email, send_gmail_smtp, load_jd, jd_file_used, jd_is_exact, _idf_weights, _jd_keywords
+from .tools_resumes import list_resumes, read_resume, score_resume, find_slots, send_email, send_gmail_smtp, load_jd, jd_file_used, jd_is_exact, role_core_tokens, resume_role_affinity, _idf_weights, _jd_keywords
 from .tools_ats import ats_upsert
 from app.config import RESUME_DIR, CAL_DIR, ATS_DB, SCORE_THRESHOLD, PANEL, JDS_DIR
 
@@ -51,11 +51,19 @@ def screener_node(state: HireState, llm=None) -> dict:
                          f"{f' (closest file: {jd_file})' if jd_file else ''}."
                          f" Save a JD named '{role}' in panel 3, then re-run."}
     infos = [(fn, read_resume(RESUME_DIR, fn)) for fn in files]
-    weights = _idf_weights([i["text"].lower() for _, i in infos], _jd_keywords(jd_text))
+    from app.config import ROLE_FILTER
+    core = role_core_tokens(role)
+    pool = [(fn, i) for fn, i in infos if resume_role_affinity(i, fn, core)] \
+        if (ROLE_FILTER and core) else list(infos)
+    if len(pool) < top_n:
+        pool = list(infos)  # too few role applicants: screen everyone honestly
+    trace.append({"node": "screener", "role_pool": f"{len(pool)} of {len(infos)}",
+                  "role_tokens": core})
+    weights = _idf_weights([i["text"].lower() for _, i in pool], _jd_keywords(jd_text))
     # Rule-score everyone (free, instant), then LLM-rescore only the head of the
     # list in parallel. Bounds a 79-resume run to ~15 LLM calls instead of 79.
     from app.config import LLM_RESCORE_LIMIT, LLM_RESCORE_WORKERS
-    prelim = [(fn, info, score_resume(info["text"], jd_text, role, weights)) for fn, info in infos]
+    prelim = [(fn, info, score_resume(info["text"], jd_text, role, weights)) for fn, info in pool]
     prelim.sort(key=lambda t: t[2]["score"], reverse=True)
     cands = prelim[:max(LLM_RESCORE_LIMIT, top_n)] if llm is not None else prelim
     rest = prelim[len(cands):] if llm is not None else []
