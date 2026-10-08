@@ -1,13 +1,14 @@
 """FastAPI hiring worker API."""
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from pydantic import BaseModel
 from dotenv import load_dotenv
 load_dotenv()
 
 from app.agent.graph import build_graph
 from app.agent.tools_ats import ats_list
+from app.agent.tools_resumes import save_jd, load_jd, list_jds, list_resumes
 from app.api.store import new_task_id, save_task, get_task, log_trace
-from app.config import ATS_DB
+from app.config import ATS_DB, JDS_DIR, RESUME_DIR
 
 app = FastAPI(title="Hiring Worker", version="0.1.0")
 graph = build_graph()
@@ -17,6 +18,10 @@ class GoalRequest(BaseModel):
 
 class ApproveRequest(BaseModel):
     decision: str = "approved"
+
+class JDRequest(BaseModel):
+    role: str
+    text: str
 
 def _run(goal: str, approval: str = "") -> dict:
     out = graph.invoke({"goal": goal, "retries": 0, "trace": [], "approval_decision": approval})
@@ -60,6 +65,38 @@ def approve(tid: str, req: ApproveRequest):
 @app.get("/ats/candidates")
 def candidates(role: str = ""):
     return {"candidates": ats_list(ATS_DB, role)}
+
+@app.post("/jds")
+def upsert_jd(req: JDRequest):
+    key = save_jd(JDS_DIR, req.role, req.text)
+    return {"ok": True, "role": req.role, "key": key, "chars": len(req.text)}
+
+@app.get("/jds")
+def jd_list():
+    return {"jds": list_jds(JDS_DIR)}
+
+@app.get("/jds/{role}")
+def jd_get(role: str):
+    text = load_jd(JDS_DIR, role)
+    if not text:
+        raise HTTPException(404, "no JD for role")
+    return {"role": role, "text": text}
+
+@app.post("/resumes/upload")
+async def upload_resume(file: UploadFile = File(...)):
+    from pathlib import Path
+    dest_dir = Path(RESUME_DIR)
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    data = await file.read()
+    if not data:
+        raise HTTPException(400, "empty file")
+    name = Path(file.filename or "resume.txt").name
+    # allow txt/md/pdf only
+    if Path(name).suffix.lower() not in (".txt", ".md", ".pdf"):
+        raise HTTPException(400, "use .txt, .md or .pdf")
+    (dest_dir / name).write_bytes(data)
+    return {"ok": True, "filename": name, "bytes": len(data),
+            "resumes": list_resumes(str(dest_dir))}
 
 @app.get("/")
 def root():

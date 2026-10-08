@@ -1,0 +1,3 @@
+Role: Software Engineer (Backend, AI)
+Requirements: Python, FastAPI, LangChain, LLM apps, AWS, Postgres, pytest.
+Must have: 3+ years building APIs. Plus: vector DBs, Docker.

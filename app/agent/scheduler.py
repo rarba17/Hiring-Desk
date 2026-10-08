@@ -1,16 +1,17 @@
 """Screener+Scheduler executor: score resumes, pick top-N, book conflict-free slots."""
 import time
+from pathlib import Path
 from .state import HireState
-from .tools_resumes import list_resumes, read_resume, score_resume, find_slots, send_email
+from .tools_resumes import list_resumes, read_resume, score_resume, find_slots, send_email, load_jd
 from .tools_ats import ats_upsert
-from app.config import RESUME_DIR, CAL_DIR, ATS_DB, SCORE_THRESHOLD, PANEL
+from app.config import RESUME_DIR, CAL_DIR, ATS_DB, SCORE_THRESHOLD, PANEL, JDS_DIR
 
-def _llm_score(llm, text: str, fallback: dict) -> dict:
+def _llm_score(llm, text: str, jd_text: str, fallback: dict) -> dict:
     if llm is None:
         return fallback
     try:
-        r = llm.invoke([("system", 'Score 0-100 JSON {"score":float,"confidence":float,"reason":str} ONLY.'),
-                        ("user", text[:2500])])
+        r = llm.invoke([("system", 'Score resume 0-100 against the JD. JSON {"score":float,"confidence":float,"reason":str} ONLY.'),
+                        ("user", f"JD:\n{jd_text[:2000]}\n\nResume:\n{text[:2500]}")])
         import json as _j
         d = _j.loads(r.content if isinstance(r.content, str) else str(r.content))
         return {"score": float(d.get("score", fallback["score"])),
@@ -36,11 +37,13 @@ def screener_node(state: HireState, llm=None) -> dict:
             time.sleep(0.4 * attempt)
     if not files:
         return {"status": "failed", "error": "no resumes found", "trace": trace}
+    jd_text = load_jd(JDS_DIR, role)
+    trace.append({"node": "screener", "jd_chars": len(jd_text)})
     for fn in files:
         info = read_resume(RESUME_DIR, fn)
-        base = score_resume(info["text"], role)
-        s = _llm_score(llm, info["text"], base)
-        cid = fn.replace(".txt", "")
+        base = score_resume(info["text"], jd_text, role)
+        s = _llm_score(llm, info["text"], jd_text, base)
+        cid = Path(fn).stem
         email = f"{cid}@example.com"
         scored.append({"candidate_id": cid, "name": info["name"], "email": email,
                        "score": s["score"], "confidence": s.get("confidence", 0.85),
