@@ -6,7 +6,7 @@ load_dotenv()
 
 from app.agent.graph import build_graph
 from app.agent.tools_ats import ats_list
-from app.agent.tools_resumes import save_jd, load_jd, list_jds, list_resumes
+from app.agent.tools_resumes import save_jd, load_jd, list_jds, list_resumes, delete_jd, read_jd_exact
 from app.api.store import new_task_id, save_task, get_task, log_trace
 from app.config import ATS_DB, JDS_DIR, RESUME_DIR
 
@@ -87,10 +87,16 @@ def jd_list():
 
 @app.get("/jds/{role}")
 def jd_get(role: str):
-    text = load_jd(JDS_DIR, role)
+    text = read_jd_exact(JDS_DIR, role)
     if not text:
         raise HTTPException(404, "no JD for role")
     return {"role": role, "text": text}
+
+@app.delete("/jds/{role}")
+def jd_delete(role: str):
+    if not delete_jd(JDS_DIR, role):
+        raise HTTPException(404, "no JD for role")
+    return {"ok": True, "role": role}
 
 @app.post("/resumes/upload")
 async def upload_resume(file: UploadFile = File(...)):

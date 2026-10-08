@@ -67,16 +67,33 @@ def score_resume(text: str, jd_text: str = "", role: str = "software engineer") 
     return {"score": score, "confidence": 0.85, "method": "rules-jd",
             "matched": hits[:10], "jd_keywords": kws[:10]}
 
+def jd_key(role: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "_", (role or "").strip().lower()).strip("_") or "default"
+
+def jd_path(jds_dir: str, role: str) -> Path:
+    return Path(jds_dir) / f"{jd_key(role)}.txt"
+
+def read_jd_exact(jds_dir: str, role: str) -> str:
+    """Exact match only (for View). The screener's load_jd keeps fallbacks."""
+    p = jd_path(jds_dir, role)
+    return p.read_text() if p.exists() else ""
+
 def save_jd(jds_dir: str, role: str, text: str) -> str:
     p = Path(jds_dir)
     p.mkdir(parents=True, exist_ok=True)
-    key = re.sub(r"[^a-z0-9]+", "_", role.strip().lower()).strip("_") or "default"
+    key = jd_key(role)
     (p / f"{key}.txt").write_text(text)
     return key
 
+def delete_jd(jds_dir: str, role: str) -> bool:
+    p = jd_path(jds_dir, role)
+    if p.exists():
+        p.unlink()
+        return True
+    return False
+
 def load_jd(jds_dir: str, role: str) -> str:
-    key = re.sub(r"[^a-z0-9]+", "_", role.strip().lower()).strip("_") or "default"
-    p = Path(jds_dir) / f"{key}.txt"
+    p = jd_path(jds_dir, role)
     if p.exists():
         return p.read_text()
     # fallback: any JD containing role token, else first JD, else ""

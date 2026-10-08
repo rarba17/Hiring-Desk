@@ -23,6 +23,16 @@ export const api = {
     if (!r.ok) throw new Error(await r.text());
     return r.json();
   },
+  async jdView(role) {
+    const r = await fetch(`/jds/${encodeURIComponent(role)}`);
+    if (!r.ok) throw new Error(await r.text());
+    return r.json();
+  },
+  async jdDelete(role) {
+    const r = await fetch(`/jds/${encodeURIComponent(role)}`, { method: 'DELETE' });
+    if (!r.ok) throw new Error(await r.text());
+    return r.json();
+  },
   async uploadResume(file) {
     const fd = new FormData();
     fd.append('file', file);
