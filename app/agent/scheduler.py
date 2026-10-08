@@ -2,7 +2,7 @@
 import time
 from pathlib import Path
 from .state import HireState
-from .tools_resumes import list_resumes, read_resume, score_resume, find_slots, send_email, send_gmail_smtp, load_jd, jd_file_used, _idf_weights, _jd_keywords
+from .tools_resumes import list_resumes, read_resume, score_resume, find_slots, send_email, send_gmail_smtp, load_jd, jd_file_used, jd_is_exact, _idf_weights, _jd_keywords
 from .tools_ats import ats_upsert
 from app.config import RESUME_DIR, CAL_DIR, ATS_DB, SCORE_THRESHOLD, PANEL, JDS_DIR
 
@@ -38,7 +38,8 @@ def screener_node(state: HireState, llm=None) -> dict:
     if not files:
         return {"status": "failed", "error": "no resumes found", "trace": trace}
     jd_text = load_jd(JDS_DIR, role)
-    trace.append({"node": "screener", "jd_file": jd_file_used(JDS_DIR, role), "jd_chars": len(jd_text)})
+    trace.append({"node": "screener", "jd_file": jd_file_used(JDS_DIR, role),
+                  "jd_exact": jd_is_exact(JDS_DIR, role), "jd_chars": len(jd_text)})
     infos = [(fn, read_resume(RESUME_DIR, fn)) for fn in files]
     weights = _idf_weights([i["text"].lower() for _, i in infos], _jd_keywords(jd_text))
     for fn, info in infos:
@@ -53,7 +54,8 @@ def screener_node(state: HireState, llm=None) -> dict:
         ats_upsert(ATS_DB, cid, info["name"], role, s["score"], "screened")
     scored.sort(key=lambda x: x["score"], reverse=True)
     shortlist = scored[:top_n]
-    trace.append({"node": "screener", "jd_file": jd_file_used(JDS_DIR, role), "shortlist": shortlist})
+    trace.append({"node": "screener", "jd_file": jd_file_used(JDS_DIR, role),
+                  "jd_exact": jd_is_exact(JDS_DIR, role), "shortlist": shortlist})
     low = [c for c in shortlist if c["score"] < SCORE_THRESHOLD or c["confidence"] < 0.7]
     if low and state.get("approval_decision") != "approved":
         return {"status": "need_approval", "shortlist": shortlist, "trace": trace,

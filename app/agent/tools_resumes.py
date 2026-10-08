@@ -192,6 +192,10 @@ def jd_file_used(jds_dir: str, role: str) -> str:
             return best.name
     return ""
 
+def jd_is_exact(jds_dir: str, role: str) -> bool:
+    """True when a JD file exists for this exact role (no fallback guessing)."""
+    return jd_path(jds_dir, role).exists()
+
 def list_jds(jds_dir: str) -> List[str]:
     p = Path(jds_dir)
     if not p.exists():
