@@ -21,15 +21,16 @@ export function TaskRunner({ onDone }) {
     finally { setBusy(false); }
   };
   const status = out?.status || out?.result?.status;
+  const stampLabel = { done: 'Scheduled', need_approval: 'Needs sign-off', failed: 'Stopped' }[status];
   return (
     <div className="card">
-      <h3>1 · Run hiring worker</h3>
+      <h3>1. Run the shortlist</h3>
       <textarea rows={3} value={goal} onChange={(e) => setGoal(e.target.value)} />
       <div><button onClick={run} disabled={busy}>{busy ? 'Running…' : 'Run worker'}</button>
-      {status && <span className={`pill ${status}`}>{status}</span>}</div>
-      {err && <p style={{ color: '#ff5d5d' }}>{err}</p>}
+      {status && <span className={`stamp ${status}`}>{stampLabel || status}</span>}</div>
+      {err && <p className="err">{err}</p>}
       {status === 'need_approval' && (
-        <div style={{ marginTop: 8 }}>
+        <div className="stack">
           <button className="warn" onClick={() => decide('approved')}>Approve & continue</button>
           <button className="ghost" onClick={() => decide('rejected')}>Reject</button>
         </div>
@@ -46,7 +47,7 @@ function Bookings({ out }) {
   const shortlist = (r.trace || []).find((t) => t.shortlist)?.shortlist || [];
   if (!bookings.length && !shortlist.length) return null;
   return (
-    <div style={{ marginTop: 12 }}>
+    <div className="stack">
       {!!shortlist.length && (<><h4>Shortlist (ranked)</h4><table><thead><tr><th>Candidate</th><th>Score</th><th>Reason</th></tr></thead>
       <tbody>{shortlist.map((s) => <tr key={s.candidate_id}><td>{s.name} ({s.candidate_id})</td><td>{s.score}</td><td>{s.reason || ''}</td></tr>)}</tbody></table></>)}
       {!!bookings.length && (<><h4>Bookings</h4><table><thead><tr><th>Candidate</th><th>Slot</th><th>Email</th></tr></thead>

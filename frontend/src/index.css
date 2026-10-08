@@ -1,22 +1,195 @@
-:root { --bg:#0f141b; --card:#182230; --line:#263448; --txt:#e8eef6; --mut:#93a4bb; --acc:#4da3ff; --ok:#34c77b; --warn:#ffb020; --bad:#ff5d5d; }
+/* Hiring desk — carbon-copy dossier on a green felt desk.
+   Paper sheets, folder tabs, rubber stamps, ledger rules. */
+
+:root {
+  --desk: #26332b;
+  --desk-deep: #1c2620;
+  --paper: #e9ebe6;
+  --paper-sink: #dde0d8;
+  --ink: #1f2a30;
+  --pencil: #5d6b73;
+  --rule: #b9beb2;
+  --stamp: #b3352b;
+  --folder: #c98a1b;
+  --ledger: #37503f;
+}
+
 * { box-sizing: border-box; }
-body { margin:0; background:var(--bg); color:var(--txt); font-family: Inter, system-ui, sans-serif; }
-.app { max-width:1100px; margin:0 auto; padding:24px; }
-.top { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
-.badge { padding:4px 10px; border-radius:20px; font-size:12px; border:1px solid var(--line); color:var(--mut); }
-.badge.ok { color:var(--ok); border-color:var(--ok); }
-.grid { display:grid; grid-template-columns: 1.1fr 0.9fr; gap:16px; }
-@media (max-width:900px){ .grid{grid-template-columns:1fr;} }
-.card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:16px; }
-textarea, input, select { width:100%; background:#0d131c; color:var(--txt); border:1px solid var(--line); border-radius:8px; padding:10px; margin:6px 0; }
-button { background:var(--acc); color:#04121f; border:0; border-radius:8px; padding:10px 14px; font-weight:700; cursor:pointer; margin-right:8px; }
-button.ghost { background:transparent; color:var(--txt); border:1px solid var(--line); }
-button.warn { background:var(--warn); }
-table { width:100%; border-collapse:collapse; font-size:13px; }
-th, td { text-align:left; padding:8px; border-bottom:1px solid var(--line); }
-.pill { display:inline-block; padding:2px 8px; border-radius:12px; font-size:11px; }
-.pill.done { background:#0f3d26; color:var(--ok); }
-.pill.need_approval { background:#3d2c0f; color:var(--warn); }
-.pill.failed { background:#3d0f0f; color:var(--bad); }
-pre.trace { background:#0b1119; border:1px solid var(--line); border-radius:8px; padding:10px; max-height:260px; overflow:auto; font-size:12px; }
-.stage-screened { color:var(--mut); } .stage-interview_scheduled { color:var(--ok); font-weight:700; }
+
+body {
+  margin: 0;
+  color: var(--paper);
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.015) 0 2px, transparent 2px 5px),
+    var(--desk);
+  font-family: "Archivo", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.app { max-width: 1060px; margin: 0 auto; padding: 28px 24px 64px; }
+
+/* Masthead: folder tab holding the dossier title */
+.masthead { margin: 8px 0 20px; }
+.folder-tab {
+  display: inline-block;
+  background: var(--folder);
+  color: var(--desk-deep);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  padding: 6px 18px 6px 14px;
+  border-radius: 8px 14px 0 0;
+}
+.masthead h1 {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(30px, 4.5vw, 46px);
+  line-height: 1.05;
+  margin: 0;
+  padding: 14px 20px 16px;
+  color: var(--ink);
+  background: var(--paper);
+  border-radius: 0 6px 6px 6px;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.35);
+  max-width: 22ch;
+}
+.masthead-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* Backend seal: a small stamp, green when the line is open */
+.seal {
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--paper);
+  border: 2px solid var(--paper);
+  outline: 1px solid var(--paper);
+  outline-offset: 2px;
+  border-radius: 3px;
+  padding: 6px 12px;
+  transform: rotate(2deg);
+  opacity: 0.85;
+  margin-top: 10px;
+  white-space: nowrap;
+}
+.seal.ok { color: #9fd8b4; border-color: #9fd8b4; outline-color: #9fd8b4; }
+
+/* Sheets of paper pinned to the desk */
+.grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 18px; align-items: start; }
+@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+
+.card {
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 3px;
+  padding: 18px 18px 16px;
+  margin-bottom: 18px;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.35);
+}
+.card h3 {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 560;
+  font-size: 21px;
+  margin: 0 0 10px;
+}
+.card h4 { font-size: 14px; margin: 16px 0 6px; }
+
+/* Ledger tables: hairline rules, figures right aligned */
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+th {
+  text-align: left;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--pencil);
+  padding: 6px 8px 6px 0;
+  border-bottom: 2px solid var(--ink);
+}
+th.num, td.num { text-align: right; }
+td { padding: 7px 8px 7px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+tbody tr:hover td { background: rgba(55, 80, 63, 0.07); }
+.stage-interview_scheduled { color: var(--ledger); font-weight: 800; }
+.stage-screened { color: var(--pencil); }
+
+/* Rubber-stamp verdicts: the one loud thing on the desk */
+.stamp {
+  display: inline-block;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 12px 4px;
+  border: 2.5px solid currentColor;
+  outline: 1px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 3px;
+  transform: rotate(-3deg);
+  margin-left: 10px;
+  vertical-align: middle;
+  animation: stamp-in 0.28s cubic-bezier(0.2, 2.4, 0.4, 1) both;
+  transform-origin: center;
+}
+.stamp.done { color: var(--ledger); }
+.stamp.need_approval { color: var(--stamp); }
+.stamp.failed { color: var(--stamp); transform: rotate(2deg); }
+@keyframes stamp-in {
+  from { opacity: 0; transform: rotate(-3deg) scale(1.7); }
+  to { opacity: 1; transform: rotate(-3deg) scale(1); }
+}
+
+/* Forms: inset paper, ink text */
+textarea, input, select {
+  width: 100%;
+  background: var(--paper-sink);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 10px;
+  margin: 6px 0;
+  font: inherit;
+  font-size: 14px;
+}
+textarea:focus-visible, input:focus-visible, button:focus-visible, summary:focus-visible {
+  outline: 2px dashed var(--folder);
+  outline-offset: 2px;
+}
+
+/* Actions: ink blocks; ghosts are ruled paper; red is reserved for removal */
+button {
+  background: var(--ink);
+  color: var(--paper);
+  border: 0;
+  border-radius: 3px;
+  padding: 10px 16px;
+  font: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+button:disabled { opacity: 0.55; cursor: default; }
+button.ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+button.warn { background: var(--ledger); color: var(--paper); }
+button.danger { background: transparent; color: var(--stamp); border: 1.5px solid var(--stamp); }
+
+.msg { font-size: 13px; color: var(--pencil); }
+.err { font-size: 13px; color: var(--stamp); font-weight: 600; }
+.filemeta { color: var(--pencil); }
+.stack { margin-top: 12px; }
+
+pre.trace {
+  background: var(--desk-deep);
+  color: #cfd6cd;
+  border-radius: 3px;
+  padding: 12px;
+  max-height: 260px;
+  overflow: auto;
+  font-size: 12px;
+}
+details summary { cursor: pointer; font-weight: 600; font-size: 14px; margin-top: 10px; }
+
+.desk-note { color: #a9b5a6; font-size: 13px; max-width: 70ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp { animation: none; }
+}

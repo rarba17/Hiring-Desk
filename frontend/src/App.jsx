@@ -13,10 +13,15 @@ export default function App() {
   useEffect(() => { api.health().then(() => setOk(true)).catch(() => setOk(false)); }, []);
   return (
     <div className="app">
-      <div className="top">
-        <h1>Hiring Worker Console</h1>
-        <span className={`badge ${ok ? 'ok' : ''}`}>{ok === null ? '…' : ok ? 'backend: ok' : 'backend: down (run uvicorn :8000)'}</span>
-      </div>
+      <header className="masthead">
+        <div className="masthead-row">
+          <div>
+            <span className="folder-tab">Interview dossier</span>
+            <h1>Hiring desk</h1>
+          </div>
+          <span className={`seal ${ok ? 'ok' : ''}`}>{ok === null ? 'Checking line' : ok ? 'Line open' : 'Line down — start uvicorn :8000'}</span>
+        </div>
+      </header>
       <div className="grid">
         <div>
           <TaskRunner onDone={bump} />
@@ -27,7 +32,7 @@ export default function App() {
           <JdManager />
         </div>
       </div>
-      <p style={{ color: '#93a4bb' }}><small>Tip: set SCORE_THRESHOLD=95 in .env to force approval. Block a slot in calendars/ to see re-planning.</small></p>
+      <p className="desk-note">Tip: set SCORE_THRESHOLD=95 in .env to force approval. Block a slot in calendars/ to see re-planning.</p>
     </div>
   );
 }

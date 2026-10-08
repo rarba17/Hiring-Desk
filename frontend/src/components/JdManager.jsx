@@ -53,20 +53,20 @@ export function JdManager() {
   };
   return (
     <div className="card">
-      <h3>3 · Job descriptions</h3>
+      <h3>3. Job descriptions</h3>
       <input value={role} onChange={(e) => setRole(e.target.value)} placeholder="role" />
       <textarea rows={5} value={text} onChange={(e) => setText(e.target.value)} />
       <div><button type="button" onClick={save} disabled={busy}>{busy ? 'Working…' : 'Save JD'}</button><button type="button" className="ghost" onClick={refresh} disabled={busy}>{busy ? 'Loading…' : 'List'}</button></div>
-      {msg && <p><small>{msg}</small></p>}
+      {msg && <p className="msg">{msg}</p>}
       {list.length ? (
         <table><tbody>{list.map((f) => (
-          <tr key={f}><td><small>{stem(f).replace(/_/g, ' ')}</small><br /><small style={{ color: '#93a4bb' }}>{f}</small></td>
+          <tr key={f}><td><small>{stem(f).replace(/_/g, ' ')}</small><br /><small className="filemeta">{f}</small></td>
           <td style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
             <button type="button" className="ghost" onClick={() => view(f)} disabled={busy}>View</button>{' '}
-            <button type="button" className="ghost" onClick={() => remove(f)} disabled={busy}>Delete</button>
+            <button type="button" className="danger" onClick={() => remove(f)} disabled={busy}>Delete</button>
           </td></tr>
         ))}</tbody></table>
-      ) : <p><small>no JDs</small></p>}
+      ) : <p className="msg">no JDs</p>}
     </div>
   );
 }

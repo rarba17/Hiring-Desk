@@ -19,18 +19,18 @@ export function AtsTable({ refreshKey }) {
   useEffect(() => { load(); }, [refreshKey]);
   return (
     <div className="card">
-      <h3>2 · ATS (verification)</h3>
+      <h3>2. Roster</h3>
       <div style={{ display: 'flex', gap: 8 }}>
         <input placeholder="filter role (optional)" value={role} onChange={(e) => setRole(e.target.value)} />
         <button type="button" className="ghost" onClick={load} disabled={busy}>{busy ? 'Loading…' : 'Refresh'}</button>
       </div>
-      {msg && <p><small style={{ color: '#93a4bb' }}>{msg}</small></p>}
+      {msg && <p className="msg">{msg}</p>}
       <table><thead><tr><th>Candidate</th><th>Score</th><th>Stage</th><th>Slot</th></tr></thead>
       <tbody>{rows.map((r) => (
         <tr key={r.candidate_id}><td>{r.name}<br /><small>{r.candidate_id}</small></td><td>{r.score}</td>
         <td className={`stage-${r.stage}`}>{r.stage}</td><td>{r.slot || '—'}</td></tr>
       ))}</tbody></table>
-      {!rows.length && !busy && <p style={{ color: '#93a4bb' }}>No rows yet — run a task above first.</p>}
+      {!rows.length && !busy && <p className="msg">No rows yet — run a task above first.</p>}
     </div>
   );
 }

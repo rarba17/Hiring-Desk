@@ -18,10 +18,10 @@ export function ResumeUpload({ onDone }) {
   };
   return (
     <div className="card">
-      <h3>4 · Upload resume (.txt/.md/.pdf)</h3>
+      <h3>4. Add a resume</h3>
       <input type="file" accept=".txt,.md,.pdf" onChange={(e) => { setFile(e.target.files?.[0] || null); setMsg(''); }} />
-      <div style={{ marginTop: 8 }}><button type="button" onClick={send} disabled={busy || !file}>{busy ? 'Uploading…' : 'Upload'}</button></div>
-      {msg && <p><small>{msg}</small></p>}
+      <div className="stack"><button type="button" onClick={send} disabled={busy || !file}>{busy ? 'Uploading…' : 'Upload resume'}</button></div>
+      {msg && <p className="msg">{msg}</p>}
     </div>
   );
 }
