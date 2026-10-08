@@ -13,12 +13,57 @@ NL instruction -> screen resumes, schedule panel interviews, send confirmations,
 | Verifier | done |
 | LangGraph supervisor | done |
 | Hiring API | done |
-| Docker + demo | in progress |
-| Resumes / calendars | queued |
-| Planner / screener | queued |
-| Scheduler / verifier | queued |
-| Hiring API | queued |
-| Docker + demo | queued |
+| Docker + demo | done |
 
 ## Run
-Coming soon. See commit history for progress.
+```bash
+cp .env.example .env   # optional OPENAI_API_KEY; rule-based scoring fallback without it
+pip install -r requirements.txt
+uvicorn app.api.main:app --reload
+# docs: http://localhost:8000/docs
+# or: docker compose up --build
+```
+
+Try:
+```bash
+curl -X POST localhost:8000/hiring/tasks -H 'Content-Type: application/json' \
+  -d '{"goal":"Schedule interviews for the top 5 candidates for the software engineer role"}'
+curl localhost:8000/ats/candidates
+```
+
+If `status=need_approval` (low score or no slot):
+```bash
+curl -X POST localhost:8000/hiring/tasks/<task_id>/approve -H 'Content-Type: application/json' -d '{"decision":"approved"}'
+```
+
+## Architecture
+`planner (gpt-4o or rules) -> screener (score+ATS) -> scheduler (slots+emails) -> verifier (deterministic) -> human_gate`
+Supervisor routing is pure Python. Trace per node logged to `trace.jsonl`. ATS upserts idempotent on `candidate_id`; bookings idempotent on `candidate_id+slot`.
+
+Tools: `list_resumes`, `read_resume`, `score_resume`, `find_slots`, `send_email`, `ats_upsert`, `ats_list`.
+
+Fault tolerance: per-tool retry, score/confidence gate, slot fallback (next free panel slot), `MAX_RETRIES` loop, verifier blocks false success (`count==N`, no double-book, ATS stage, emails sent).
+
+## Design decisions
+- **LangGraph** over CrewAI/AutoGen: explicit graph + HITL.
+- **Split models**: planner quality (gpt-4o), scoring cost (mini).
+- **Deterministic verifier**: LLM ranks, code decides done.
+- **FastAPI + SQLite/JSON**: one-container deploy for 10-15h budget.
+
+## Live demo tweaks
+1. `.env SCORE_THRESHOLD=70 -> 95`: same goal now needs approval.
+2. `app/agent/verifier.py`: add `no Friday 15:30+` rule.
+3. Block `calendars/alice.json` with busy slots: shows re-plan to next free day.
+4. Add new tool file (e.g. `background_check.py`): executor picks it up.
+
+## Limitations
+- Mock resumes/calendars/emails only, no real Gmail/Outlook.
+- In-memory task store; swap for Postgres/Redis later.
+- Rule fallback scoring if no API key.
+- Single-threaded invoke.
+
+## Next
+Real calendar OAuth, PDF resume OCR, multi-role batch, interviewer load-balancing, Langfuse traces, Celery queue.
+
+## Models / APIs
+OpenAI gpt-4o / gpt-4o-mini via langchain-openai. Other: langgraph, fastapi, uvicorn, pypdf.
