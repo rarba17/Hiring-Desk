@@ -1,0 +1,58 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hiring Worker Test UI</title>
+<style>body{font-family:system-ui;margin:24px;max-width:900px}section{border:1px solid #ddd;border-radius:8px;padding:16px;margin:12px 0}button{padding:8px 14px;cursor:pointer}pre{background:#f6f6f6;padding:12px;overflow:auto;max-height:300px}input,textarea,select{width:100%;padding:8px;margin:6px 0}</style>
+</head><body>
+<h1>Hiring Worker — Test UI</h1>
+<p>API: <a href="/docs">/docs</a> | Health: <a href="/health">/health</a></p>
+
+<section><h3>1. Run hiring task</h3>
+<textarea id="goal" rows="2">Schedule interviews for the top 5 candidates for the software engineer role</textarea>
+<button onclick="runTask()">Run worker</button>
+<pre id="taskOut">—</pre>
+<div id="approveBox" style="display:none">Needs approval. Task: <b id="tid"></b>
+<button onclick="approve('approved')">Approve</button>
+<button onclick="approve('rejected')">Reject</button></div>
+</section>
+
+<section><h3>2. ATS candidates</h3>
+<button onclick="loadATS()">Refresh ATS</button> <pre id="atsOut">—</pre></section>
+
+<section><h3>3. JDs</h3>
+<input id="jdRole" value="software engineer"><textarea id="jdText" rows="4">Role: Software Engineer (Backend, AI)
+Requirements: Python, FastAPI, LangChain, LLM apps, AWS.</textarea>
+<button onclick="saveJD()">Save JD</button> <button onclick="loadJDs()">List JDs</button>
+<pre id="jdOut">—</pre></section>
+
+<section><h3>4. Upload resume (.txt/.pdf)</h3>
+<input type="file" id="resumeFile" accept=".txt,.md,.pdf">
+<button onclick="uploadResume()">Upload</button><pre id="upOut">—</pre></section>
+
+<script>
+let lastTid=null;
+async function runTask(){
+  const r=await fetch('/hiring/tasks',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({goal:goal.value})});
+  const j=await r.json(); lastTid=j.task_id;
+  taskOut.textContent=JSON.stringify(j,null,2);
+  approveBox.style.display=(j.status==='need_approval')?'block':'none'; tid.textContent=lastTid||'';
+  loadATS();
+}
+async function approve(d){
+  const r=await fetch(`/hiring/tasks/${lastTid}/approve`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({decision:d})});
+  taskOut.textContent=JSON.stringify(await r.json(),null,2); approveBox.style.display='none'; loadATS();
+}
+async function loadATS(){ atsOut.textContent=JSON.stringify(await (await fetch('/ats/candidates')).json(),null,2); }
+async function saveJD(){
+  const r=await fetch('/jds',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({role:jdRole.value,text:jdText.value})});
+  jdOut.textContent=JSON.stringify(await r.json(),null,2);
+}
+async function loadJDs(){ jdOut.textContent=JSON.stringify(await (await fetch('/jds')).json(),null,2); }
+async function uploadResume(){
+  const f=resumeFile.files[0]; if(!f){upOut.textContent='pick a file';return;}
+  const fd=new FormData(); fd.append('file',f);
+  const r=await fetch('/resumes/upload',{method:'POST',body:fd});
+  upOut.textContent=JSON.stringify(await r.json(),null,2);
+}
+loadATS();
+</script>
+</body></html>

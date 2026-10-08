@@ -100,4 +100,10 @@ async def upload_resume(file: UploadFile = File(...)):
 
 @app.get("/")
 def root():
-    return {"service": "hiring-worker", "docs": "/docs"}
+    return {"service": "hiring-worker", "docs": "/docs", "ui": "/ui"}
+
+@app.get("/ui")
+def ui():
+    from fastapi.responses import HTMLResponse
+    from pathlib import Path
+    return HTMLResponse(Path(__file__).with_name("ui.html").read_text())
