@@ -128,15 +128,38 @@ def score_resume(text: str, jd_text: str = "", role: str = "software engineer",
             "matched": hits[:10], "jd_keywords": kws[:10], "reason": reason}
 
 def jd_key(role: str) -> str:
+    # engineer ~ developer: "Python Backend Engineer" and "Python Backend
+    # Developer" are the same role and must resolve to one file.
+    norm = (role or "").strip().lower()
+    norm = re.sub(r"\bengineers?\b", "developer", norm)
+    return re.sub(r"[^a-z0-9]+", "_", norm).strip("_") or "default"
+
+def _jd_literal_key(role: str) -> str:
+    """Pre-synonym spelling, so files saved as *-engineer.txt keep resolving."""
     return re.sub(r"[^a-z0-9]+", "_", (role or "").strip().lower()).strip("_") or "default"
 
 def jd_path(jds_dir: str, role: str) -> Path:
     return Path(jds_dir) / f"{jd_key(role)}.txt"
 
+def _jd_existing(jds_dir: str, role: str) -> Path | None:
+    """Canonical file, literal-spelling file, or a file whose name covers all
+    role tokens ("Golang Engineer" -> go_golang_engineer.txt). Else None."""
+    for key in (jd_key(role), _jd_literal_key(role)):
+        p = Path(jds_dir) / f"{key}.txt"
+        if p.exists():
+            return p
+    rtoks = set(re.findall(r"[a-z0-9]+", jd_key(role).replace("_", " ")))
+    rtoks.discard("developer")  # engineer/developer already canonicalized
+    if rtoks and Path(jds_dir).exists():
+        for f in sorted(Path(jds_dir).iterdir()):
+            if f.is_file() and rtoks <= set(re.findall(r"[a-z0-9]+", f.stem.lower())):
+                return f
+    return None
+
 def read_jd_exact(jds_dir: str, role: str) -> str:
     """Exact match only (for View). The screener's load_jd keeps fallbacks."""
-    p = jd_path(jds_dir, role)
-    return p.read_text() if p.exists() else ""
+    p = _jd_existing(jds_dir, role)
+    return p.read_text() if p else ""
 
 def save_jd(jds_dir: str, role: str, text: str) -> str:
     p = Path(jds_dir)
@@ -146,15 +169,15 @@ def save_jd(jds_dir: str, role: str, text: str) -> str:
     return key
 
 def delete_jd(jds_dir: str, role: str) -> bool:
-    p = jd_path(jds_dir, role)
-    if p.exists():
+    p = _jd_existing(jds_dir, role)
+    if p:
         p.unlink()
         return True
     return False
 
 def load_jd(jds_dir: str, role: str) -> str:
-    p = jd_path(jds_dir, role)
-    if p.exists():
+    p = _jd_existing(jds_dir, role)
+    if p:
         return p.read_text()
     # best match: JD file sharing the most tokens with the role (deterministic)
     if Path(jds_dir).exists():
@@ -176,8 +199,8 @@ def load_jd(jds_dir: str, role: str) -> str:
 
 def jd_file_used(jds_dir: str, role: str) -> str:
     """Which JD file load_jd resolves to (for trace transparency)."""
-    p = jd_path(jds_dir, role)
-    if p.exists():
+    p = _jd_existing(jds_dir, role)
+    if p:
         return p.name
     if Path(jds_dir).exists():
         rtoks = set(re.findall(r"[a-z0-9]+", role.lower()))
@@ -194,7 +217,7 @@ def jd_file_used(jds_dir: str, role: str) -> str:
 
 def jd_is_exact(jds_dir: str, role: str) -> bool:
     """True when a JD file exists for this exact role (no fallback guessing)."""
-    return jd_path(jds_dir, role).exists()
+    return _jd_existing(jds_dir, role) is not None
 
 def list_jds(jds_dir: str) -> List[str]:
     p = Path(jds_dir)
