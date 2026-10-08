@@ -21,7 +21,8 @@ export function TaskRunner({ onDone }) {
     finally { setBusy(false); }
   };
   const status = out?.status || out?.result?.status;
-  const stampLabel = { done: 'Scheduled', need_approval: 'Needs sign-off', failed: 'Stopped' }[status];
+  const resultErr = out?.result?.error || out?.error || '';
+  const stampLabel = { done: 'Scheduled', need_approval: 'Needs sign-off', failed: 'Stopped', blocked: 'No matching JD' }[status];
   return (
     <div className="card">
       <h3>1. Run the shortlist</h3>
@@ -29,6 +30,7 @@ export function TaskRunner({ onDone }) {
       <div><button onClick={run} disabled={busy}>{busy ? 'Running…' : 'Run worker'}</button>
       {status && <span className={`stamp ${status}`}>{stampLabel || status}</span>}</div>
       {err && <p className="err">{err}</p>}
+      {!err && resultErr && (status === 'blocked' || status === 'failed') && <p className="err">{resultErr}</p>}
       {status === 'need_approval' && (
         <div className="stack">
           <button className="warn" onClick={() => decide('approved')}>Approve & continue</button>

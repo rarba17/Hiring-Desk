@@ -38,8 +38,18 @@ def screener_node(state: HireState, llm=None) -> dict:
     if not files:
         return {"status": "failed", "error": "no resumes found", "trace": trace}
     jd_text = load_jd(JDS_DIR, role)
-    trace.append({"node": "screener", "jd_file": jd_file_used(JDS_DIR, role),
-                  "jd_exact": jd_is_exact(JDS_DIR, role), "jd_chars": len(jd_text)})
+    jd_file = jd_file_used(JDS_DIR, role)
+    jd_exact = jd_is_exact(JDS_DIR, role)
+    trace.append({"node": "screener", "jd_file": jd_file,
+                  "jd_exact": jd_exact, "jd_chars": len(jd_text)})
+    from app.config import STRICT_JD
+    if STRICT_JD and not jd_exact:
+        trace.append({"node": "screener", "blocked": True,
+                      "reason": f"no exact JD for role '{role}'"})
+        return {"status": "blocked", "trace": trace,
+                "error": f"No interviews booked: no exact JD for role '{role}'"
+                         f"{f' (closest file: {jd_file})' if jd_file else ''}."
+                         f" Save a JD named '{role}' in panel 3, then re-run."}
     infos = [(fn, read_resume(RESUME_DIR, fn)) for fn in files]
     weights = _idf_weights([i["text"].lower() for _, i in infos], _jd_keywords(jd_text))
     # Rule-score everyone (free, instant), then LLM-rescore only the head of the
