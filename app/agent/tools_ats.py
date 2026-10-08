@@ -52,7 +52,9 @@ def ats_list(db: str, role: str = "") -> List[dict]:
     c = _conn(db)
     cur = c.cursor()
     if role:
-        cur.execute("SELECT candidate_id,name,role,score,stage,slot FROM candidates WHERE role=? ORDER BY score DESC", (role,))
+        # fuzzy match: old runs may store longer role strings ("all candidates for the X")
+        cur.execute("SELECT candidate_id,name,role,score,stage,slot FROM candidates WHERE LOWER(role) LIKE ? ORDER BY score DESC",
+                    (f"%{role.strip().lower()}%",))
     else:
         cur.execute("SELECT candidate_id,name,role,score,stage,slot FROM candidates ORDER BY score DESC")
     rows = cur.fetchall()
