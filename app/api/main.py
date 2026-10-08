@@ -11,6 +11,16 @@ from app.api.store import new_task_id, save_task, get_task, log_trace
 from app.config import ATS_DB, JDS_DIR, RESUME_DIR
 
 app = FastAPI(title="Hiring Worker", version="0.1.0")
+try:
+    from fastapi.middleware.cors import CORSMiddleware
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+except Exception:
+    pass
 graph = build_graph()
 
 class GoalRequest(BaseModel):

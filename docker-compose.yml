@@ -3,4 +3,10 @@ services:
     build: .
     ports: ["8000:8000"]
     env_file: .env
-    volumes: ["./seed_resumes:/app/seed_resumes", "./calendars:/app/calendars", "./ats.db:/app/ats.db"]
+    volumes: ["./seed_resumes:/app/seed_resumes", "./calendars:/app/calendars", "./ats.db:/app/ats.db", "./jds:/app/jds"]
+  ui:
+    image: node:20-slim
+    working_dir: /ui
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    ports: ["5173:5173"]
+    volumes: ["./frontend:/ui"]
