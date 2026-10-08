@@ -59,6 +59,17 @@ Set in local `.env` (never committed): `GMAIL_USER`, `GMAIL_APP_PASSWORD` (Googl
 3. Block `calendars/alice.json` with busy slots: shows re-plan to next free day.
 4. Add new tool file (e.g. `background_check.py`): executor picks it up.
 
+## Deploy
+Split deploy (recommended): static frontend + container backend.
+- **Backend (Render/Fly):** `render.yaml` builds the Dockerfile, health-checks `/health`,
+  persists SQLite on a 1 GB disk (`ATS_DB=/app/data/ats.db`). Set `OPENAI_API_KEY`,
+  Gmail vars and `CORS_ORIGINS=https://<your-frontend>` in the dashboard — never in git.
+  Single uvicorn worker on purpose: SQLite needs one writer.
+- **Frontend (Vercel/Netlify):** root `frontend/`, build `npm run build`, output `dist/`,
+  env `VITE_API_URL=https://<your-backend>`. Local dev needs nothing (Vite proxies to :8000).
+- Uploads and JD saves ride the image/disk and are ephemeral on redeploy; treat the
+  deployed box as a demo, keep seeds in git.
+
 ## Limitations
 - Mock resumes/calendars/emails only, no real Gmail/Outlook.
 - In-memory task store; swap for Postgres/Redis later.

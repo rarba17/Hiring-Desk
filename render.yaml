@@ -1,0 +1,33 @@
+# Render blueprint: one Docker backend + persistent disk for SQLite.
+# Create the static frontend on Vercel from ./frontend with
+# VITE_API_URL=https://<this-service>.onrender.com
+services:
+  - type: web
+    name: hiring-worker-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    healthCheckPath: /health
+    disk:
+      name: worker-data
+      mountPath: /app/data
+      sizeGB: 1
+    envVars:
+      - key: ATS_DB
+        value: /app/data/ats.db
+      - key: RESUME_DIR
+        value: seed_resumes
+      - key: CAL_DIR
+        value: calendars
+      - key: JDS_DIR
+        value: jds
+      - key: CORS_ORIGINS
+        value: http://localhost:5173
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: GMAIL_USER
+        sync: false
+      - key: GMAIL_APP_PASSWORD
+        sync: false
+      - key: NOTIFY_EMAIL
+        sync: false

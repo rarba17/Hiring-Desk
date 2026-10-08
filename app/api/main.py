@@ -12,10 +12,14 @@ from app.config import ATS_DB, JDS_DIR, RESUME_DIR
 
 app = FastAPI(title="Hiring Worker", version="0.1.0")
 try:
+    import os
     from fastapi.middleware.cors import CORSMiddleware
+    # CORS_ORIGINS="https://hiring-desk.vercel.app,http://localhost:5173"
+    origins = [o.strip() for o in os.getenv(
+        "CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",") if o.strip()]
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+        allow_origins=origins,
         allow_methods=["*"],
         allow_headers=["*"],
     )

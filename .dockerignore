@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.env
+ats.db
+tasks.db
+trace.jsonl
+emails_sent.jsonl
+.venv/
+venv/
+frontend/node_modules/
+frontend/dist/
+.git/
