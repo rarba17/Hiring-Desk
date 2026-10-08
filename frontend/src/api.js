@@ -13,7 +13,11 @@ export const api = {
     const q = role ? `?role=${encodeURIComponent(role)}` : '';
     return (await fetch(`/ats/candidates${q}`)).json();
   },
-  async jds() { return (await fetch('/jds')).json(); },
+  async jds() {
+    const r = await fetch('/jds');
+    if (!r.ok) throw new Error(await r.text());
+    return r.json();
+  },
   async saveJD(role, text) {
     const r = await fetch('/jds', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ role, text }) });
     if (!r.ok) throw new Error(await r.text());
