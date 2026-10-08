@@ -4,9 +4,10 @@ import { TaskRunner } from './components/TaskRunner.jsx';
 import { AtsTable } from './components/AtsTable.jsx';
 import { JdManager } from './components/JdManager.jsx';
 import { ResumeUpload } from './components/ResumeUpload.jsx';
+import { Landing } from './components/Landing.jsx';
 import './index.css';
 
-export default function App() {
+function Console() {
   const [ok, setOk] = useState(null);
   const [tick, setTick] = useState(0);
   const bump = () => setTick((t) => t + 1);
@@ -19,7 +20,10 @@ export default function App() {
             <span className="folder-tab">Interview dossier</span>
             <h1>Hiring desk</h1>
           </div>
-          <span className={`seal ${ok ? 'ok' : ''}`}>{ok === null ? 'Checking line' : ok ? 'Line open' : 'Line down — start uvicorn :8000'}</span>
+          <div className="masthead-side">
+            <span className={`seal ${ok ? 'ok' : ''}`}>{ok === null ? 'Checking line' : ok ? 'Line open' : 'Line down — start uvicorn :8000'}</span>
+            <a className="backlink" href="#/">Overview</a>
+          </div>
         </div>
       </header>
       <div className="grid">
@@ -35,4 +39,15 @@ export default function App() {
       <p className="desk-note">Tip: set SCORE_THRESHOLD=95 in .env to force approval. Block a slot in calendars/ to see re-planning.</p>
     </div>
   );
+}
+
+export default function App() {
+  const [route, setRoute] = useState(window.location.hash || '#/');
+  useEffect(() => {
+    const onHash = () => setRoute(window.location.hash || '#/');
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+  if (route.startsWith('#/console')) return <Console />;
+  return <Landing />;
 }

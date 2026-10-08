@@ -189,7 +189,106 @@ pre.trace {
 details summary { cursor: pointer; font-weight: 600; font-size: 14px; margin-top: 10px; }
 
 .desk-note { color: #a9b5a6; font-size: 13px; max-width: 70ch; }
+.masthead-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.backlink { color: #a9b5a6; font-size: 13px; }
+
+/* Anchor buttons share the desk button voice */
+.btn-ink, .btn-paper {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  margin-right: 8px;
+}
+.btn-ink { background: var(--paper); color: var(--desk-deep); }
+.btn-paper { border: 1.5px solid var(--paper); color: var(--paper); }
+
+/* Landing hero: copy left, a living dossier sheet right */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: center;
+  padding: 12px 0 28px;
+}
+@media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
+.lede {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(26px, 3.6vw, 40px);
+  line-height: 1.08;
+  margin: 14px 0 10px;
+  max-width: 20ch;
+}
+.hero-sub { color: #c3cec2; max-width: 44ch; }
+.hero-cta { margin-top: 16px; }
+.hero-stage { position: relative; min-height: 300px; }
+.slip {
+  position: absolute;
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 3px;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.35);
+  padding: 10px 14px;
+  font-size: 13px;
+  animation: drift 7s ease-in-out infinite;
+}
+.slip b { font-family: "Fraunces", Georgia, serif; display: block; font-size: 15px; }
+.slip span { color: var(--pencil); font-size: 12px; }
+.slip.s1 { top: 0; left: 4%; transform: rotate(-4deg); }
+.slip.s2 { top: 64px; right: 2%; transform: rotate(3deg); animation-delay: -2.4s; }
+.slip.s3 { top: 128px; left: 12%; transform: rotate(-2deg); animation-delay: -4.8s; }
+@keyframes drift {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -10px; }
+}
+.demo-sheet {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 6%;
+  background: var(--paper-sink);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.35);
+  padding: 12px 16px 16px;
+}
+.demo-line { margin: 2px 0; font-size: 13.5px; font-weight: 600; }
+.demo-line.dim { color: var(--pencil); font-weight: 400; }
+.stamp.loop { animation: stamp-loop 5s ease-in-out infinite; }
+@keyframes stamp-loop {
+  0% { opacity: 0; transform: rotate(-3deg) scale(1.8); }
+  8% { opacity: 1; transform: rotate(-3deg) scale(1); }
+  78% { opacity: 1; transform: rotate(-3deg) scale(1); }
+  88%, 100% { opacity: 0; transform: rotate(-3deg) scale(0.94); }
+}
+
+/* Keyword ticker tape */
+.ticker { overflow: hidden; border-top: 1px solid rgba(233, 235, 230, 0.25); border-bottom: 1px solid rgba(233, 235, 230, 0.25); margin: 6px 0 20px; }
+.ticker-track { display: flex; width: max-content; animation: tape 26s linear infinite; }
+.ticker-run { display: flex; }
+.ticker em {
+  font-style: normal;
+  font-size: 13px;
+  color: #c3cec2;
+  padding: 8px 18px;
+  white-space: nowrap;
+}
+.ticker em::before { content: "◆ "; color: var(--folder); font-size: 10px; }
+@keyframes tape { to { transform: translateX(-50%); } }
+
+/* The run, as a genuine sequence */
+.runway { margin: 8px 0 4px; padding-left: 26px; }
+.runway li { margin-bottom: 10px; max-width: 62ch; }
+.runway li::marker { font-family: "Fraunces", Georgia, serif; font-weight: 700; color: var(--folder); }
+
+.notes { margin: 8px 0 4px; padding-left: 20px; }
+.notes li { margin-bottom: 8px; max-width: 60ch; }
+.notes li::marker { color: var(--folder); }
 
 @media (prefers-reduced-motion: reduce) {
   .stamp { animation: none; }
+  .slip, .ticker-track, .stamp.loop { animation: none; }
 }
