@@ -42,7 +42,10 @@ Supervisor routing is pure Python. Trace per node logged to `trace.jsonl`. ATS u
 
 Tools: `list_resumes`, `read_resume`, `score_resume`, `find_slots`, `send_email`, `ats_upsert`, `ats_list`.
 
-Fault tolerance: per-tool retry, score/confidence gate, slot fallback (next free panel slot), `MAX_RETRIES` loop, verifier blocks false success (`count==N`, no double-book, ATS stage, emails sent).
+Fault tolerance: per-tool retry, score/confidence gate, slot fallback (next free panel slot), `MAX_RETRIES` loop, verifier blocks false success (`count==N`, no double-book, ATS stage, emails sent). Gmail send failures never fail a run (mock log kept, reason in trace).
+
+## Real Gmail invites (demo, redirect-only)
+Set in local `.env` (never committed): `GMAIL_USER`, `GMAIL_APP_PASSWORD` (Google Account -> Security -> 2-Step Verification -> App passwords), `NOTIFY_EMAIL` (your inbox). Each shortlisted candidate then triggers one `[DEMO]` invite mailed to you, annotated with the intended mock recipient. Mock `@example.com` addresses are never mailed; without these vars the worker stays log-only mock.
 
 ## Design decisions
 - **LangGraph** over CrewAI/AutoGen: explicit graph + HITL.

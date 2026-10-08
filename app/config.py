@@ -16,3 +16,11 @@ RESUME_DIR = getenv("RESUME_DIR", "seed_resumes")
 CAL_DIR = getenv("CAL_DIR", "calendars")
 JDS_DIR = getenv("JDS_DIR", "jds")
 MAX_RETRIES = int(getenv("MAX_RETRIES", "2"))
+# Real Gmail invites (redirect-only): all three set => per-candidate mail goes to NOTIFY_EMAIL.
+# Mock @example.com addresses are never mailed. Absent => log-only mock (offline-safe).
+GMAIL_USER = getenv("GMAIL_USER", "")
+GMAIL_APP_PASSWORD = getenv("GMAIL_APP_PASSWORD", "")
+NOTIFY_EMAIL = getenv("NOTIFY_EMAIL", "")
+
+def gmail_configured() -> bool:
+    return bool(GMAIL_USER and GMAIL_APP_PASSWORD and NOTIFY_EMAIL)

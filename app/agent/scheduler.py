@@ -2,7 +2,7 @@
 import time
 from pathlib import Path
 from .state import HireState
-from .tools_resumes import list_resumes, read_resume, score_resume, find_slots, send_email, load_jd, jd_file_used, _idf_weights, _jd_keywords
+from .tools_resumes import list_resumes, read_resume, score_resume, find_slots, send_email, send_gmail_smtp, load_jd, jd_file_used, _idf_weights, _jd_keywords
 from .tools_ats import ats_upsert
 from app.config import RESUME_DIR, CAL_DIR, ATS_DB, SCORE_THRESHOLD, PANEL, JDS_DIR
 
@@ -67,10 +67,25 @@ def scheduler_node(state: HireState) -> dict:
     if len(slots) < len(shortlist):
         return {"status": "failed", "error": f"only {len(slots)} slots for {len(shortlist)} candidates", "trace": trace}
     bookings = []
+    from app.config import gmail_configured, NOTIFY_EMAIL
+    use_gmail = gmail_configured()
     for cand, slot in zip(shortlist, slots):
         ats_upsert(ATS_DB, cand["candidate_id"], cand["name"], state.get("role", ""), cand["score"], "interview_scheduled", slot)
-        mail = send_email(cand["email"], f"Interview invite: {state.get('role','')} @ {slot}",
-                          f"Hi {cand['name']}, your panel interview is {slot} with " + ",".join(PANEL) + ".")
-        bookings.append({"candidate_id": cand["candidate_id"], "slot": slot, "email_id": mail["id"]})
+        subject = f"Interview invite: {state.get('role','')} @ {slot}"
+        body = (f"Hi {cand['name']}, your panel interview is {slot} with " + ",".join(PANEL) + ".")
+        mail = send_email(cand["email"], subject, body)
+        gmail_note = "mock-log"
+        if use_gmail:
+            # Redirect-only: mock candidate addresses are never mailed.
+            try:
+                g = send_gmail_smtp(
+                    NOTIFY_EMAIL, f"[DEMO] {subject}",
+                    body + f"\n\n(Intended recipient: {cand['name']} <{cand['email']}> — redirected, mock address.)")
+                mail = g
+                gmail_note = f"gmail:{g['id']} -> {NOTIFY_EMAIL}"
+            except Exception as e:
+                gmail_note = f"gmail-failed({e}); kept mock log"
+        bookings.append({"candidate_id": cand["candidate_id"], "slot": slot,
+                         "email_id": mail["id"], "email_via": gmail_note})
     trace.append({"node": "scheduler", "bookings": bookings})
     return {"status": "verifying", "bookings": bookings, "trace": trace}

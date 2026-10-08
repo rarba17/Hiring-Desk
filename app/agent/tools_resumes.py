@@ -226,3 +226,18 @@ def send_email(to: str, subject: str, body: str, log_path: str = "emails_sent.js
     with open(log_path, "a") as f:
         f.write(_j.dumps(rec) + "\n")
     return {"ok": True, "id": eid}
+
+def send_gmail_smtp(to: str, subject: str, body: str, timeout: int = 15) -> Dict[str, Any]:
+    """Real send via Gmail SMTP (app password). Raises on failure; caller decides fallback."""
+    import smtplib
+    from email.message import EmailMessage
+    from app.config import GMAIL_USER, GMAIL_APP_PASSWORD
+    msg = EmailMessage()
+    msg["From"] = GMAIL_USER
+    msg["To"] = to
+    msg["Subject"] = subject
+    msg.set_content(body)
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=timeout) as s:
+        s.login(GMAIL_USER, GMAIL_APP_PASSWORD)
+        s.send_message(msg)
+    return {"ok": True, "id": f"gmail_{abs(hash(to+subject)) % 10**6}"}
