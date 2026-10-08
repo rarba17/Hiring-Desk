@@ -13,7 +13,9 @@ def _llm(model: str):
         return None
     try:
         from langchain_openai import ChatOpenAI
-        return ChatOpenAI(model=model, temperature=0)
+        from app.config import LLM_TIMEOUT_S, LLM_MAX_RETRIES
+        return ChatOpenAI(model=model, temperature=0,
+                          timeout=LLM_TIMEOUT_S, max_retries=LLM_MAX_RETRIES)
     except Exception:
         return None
 

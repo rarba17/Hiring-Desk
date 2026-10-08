@@ -24,3 +24,8 @@ NOTIFY_EMAIL = getenv("NOTIFY_EMAIL", "")
 
 def gmail_configured() -> bool:
     return bool(GMAIL_USER and GMAIL_APP_PASSWORD and NOTIFY_EMAIL)
+# LLM budgets: rule-score ranks everyone; LLM refines only the head of the list.
+LLM_TIMEOUT_S = float(getenv("LLM_TIMEOUT_S", "20"))
+LLM_MAX_RETRIES = int(getenv("LLM_MAX_RETRIES", "1"))
+LLM_RESCORE_LIMIT = int(getenv("LLM_RESCORE_LIMIT", "15"))
+LLM_RESCORE_WORKERS = int(getenv("LLM_RESCORE_WORKERS", "5"))

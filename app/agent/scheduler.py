@@ -42,9 +42,22 @@ def screener_node(state: HireState, llm=None) -> dict:
                   "jd_exact": jd_is_exact(JDS_DIR, role), "jd_chars": len(jd_text)})
     infos = [(fn, read_resume(RESUME_DIR, fn)) for fn in files]
     weights = _idf_weights([i["text"].lower() for _, i in infos], _jd_keywords(jd_text))
-    for fn, info in infos:
-        base = score_resume(info["text"], jd_text, role, weights)
-        s = _llm_score(llm, info["text"], jd_text, base)
+    # Rule-score everyone (free, instant), then LLM-rescore only the head of the
+    # list in parallel. Bounds a 79-resume run to ~15 LLM calls instead of 79.
+    from app.config import LLM_RESCORE_LIMIT, LLM_RESCORE_WORKERS
+    prelim = [(fn, info, score_resume(info["text"], jd_text, role, weights)) for fn, info in infos]
+    prelim.sort(key=lambda t: t[2]["score"], reverse=True)
+    cands = prelim[:max(LLM_RESCORE_LIMIT, top_n)] if llm is not None else prelim
+    rest = prelim[len(cands):] if llm is not None else []
+    if llm is not None:
+        from concurrent.futures import ThreadPoolExecutor
+        def _rescore(t):
+            fn, info, base = t
+            return (fn, info, _llm_score(llm, info["text"], jd_text, base))
+        with ThreadPoolExecutor(max_workers=LLM_RESCORE_WORKERS) as ex:
+            cands = list(ex.map(_rescore, cands))
+        trace.append({"node": "screener", "llm_rescored": len(cands), "rule_only": len(rest)})
+    for fn, info, s in list(cands) + rest:
         import re as _re
         cid = _re.sub(r"[^A-Za-z0-9_]+", "_", Path(fn).stem).strip("_")
         email = f"{cid}@example.com"
