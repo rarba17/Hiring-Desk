@@ -44,10 +44,12 @@ export function TaskRunner({ onDone }) {
 function Bookings({ out }) {
   const r = out.result || {};
   const bookings = r.bookings || [];
-  const shortlist = (r.trace || []).find((t) => t.shortlist)?.shortlist || [];
+  const screenStep = (r.trace || []).find((t) => t.shortlist);
+  const shortlist = screenStep?.shortlist || [];
   if (!bookings.length && !shortlist.length) return null;
   return (
     <div className="stack">
+      {screenStep?.jd_file && <p className="msg">Scored against {screenStep.jd_file}</p>}
       {!!shortlist.length && (<><h4>Shortlist (ranked)</h4><table><thead><tr><th>Candidate</th><th>Score</th><th>Reason</th></tr></thead>
       <tbody>{shortlist.map((s) => <tr key={s.candidate_id}><td>{s.name} ({s.candidate_id})</td><td>{s.score}</td><td>{s.reason || ''}</td></tr>)}</tbody></table></>)}
       {!!bookings.length && (<><h4>Bookings</h4><table><thead><tr><th>Candidate</th><th>Slot</th><th>Email</th></tr></thead>
