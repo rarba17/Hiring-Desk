@@ -9,8 +9,10 @@ SYSTEM = """You are a hiring planner. Return ONLY JSON:
 def _rule(goal: str, top_n: int, panel: list) -> dict:
     m = re.search(r"top\s+(\d+)", goal, re.I)
     n = int(m.group(1)) if m else top_n
-    r = re.search(r"for (?:the )?([A-Za-z ]+?) role", goal, re.I)
-    role = r.group(1).strip() if r else "software engineer"
+    # take the LAST "for ... role" so "for all candidates for the X role" -> X
+    found = re.findall(r"for (?:the )?([A-Za-z ]+?) role", goal, re.I)
+    role = found[-1].strip() if found else "software engineer"
+    role = re.sub(r"^all candidates for (?:the )?", "", role, flags=re.I).strip() or role
     return {"role": role, "top_n": n, "panel": panel, "duration_min": 45,
             "success_criteria": f"{n} bookings, no double-book, ATS=interview_scheduled, emails sent"}
 

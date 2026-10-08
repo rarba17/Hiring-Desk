@@ -43,7 +43,8 @@ def screener_node(state: HireState, llm=None) -> dict:
         info = read_resume(RESUME_DIR, fn)
         base = score_resume(info["text"], jd_text, role)
         s = _llm_score(llm, info["text"], jd_text, base)
-        cid = Path(fn).stem
+        import re as _re
+        cid = _re.sub(r"[^A-Za-z0-9_]+", "_", Path(fn).stem).strip("_")
         email = f"{cid}@example.com"
         scored.append({"candidate_id": cid, "name": info["name"], "email": email,
                        "score": s["score"], "confidence": s.get("confidence", 0.85),

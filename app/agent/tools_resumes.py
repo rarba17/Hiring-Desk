@@ -5,15 +5,11 @@ from pathlib import Path
 from typing import List, Dict, Any
 
 def list_resumes(resume_dir: str, role: str = "") -> List[str]:
+    """Return ALL resumes. Screening ranks by JD score, so filename filtering would wrongly drop uploads."""
     p = Path(resume_dir)
     if not p.exists():
         return []
-    files = sorted(f.name for f in p.iterdir() if f.is_file())
-    if role:
-        token = re.split(r"[^A-Za-z0-9]+", role.strip())[0].lower()
-        matched = [f for f in files if token in f.lower() or "swe" in f.lower() or "software" in f.lower()]
-        return matched or files
-    return files
+    return sorted(f.name for f in p.iterdir() if f.is_file())
 
 def read_resume(resume_dir: str, filename: str) -> Dict[str, Any]:
     path = Path(resume_dir) / filename
@@ -27,10 +23,16 @@ def read_resume(resume_dir: str, filename: str) -> Dict[str, Any]:
     else:
         text = path.read_text(errors="ignore")
     name = re.search(r"Name:\s*(.+)", text)
+    if name:
+        display = name.group(1).strip()
+    else:
+        # fallback: first non-empty line (handles real PDFs without a "Name:" label)
+        first = next((ln.strip() for ln in text.splitlines() if ln.strip()), "")
+        display = first[:60] if first else filename
     skills = re.search(r"Skills:\s*(.+)", text, re.I)
     yrs = re.search(r"(\d+)\s+years?", text, re.I)
     return {"filename": filename, "text": text[:4000],
-            "name": name.group(1).strip() if name else filename,
+            "name": display,
             "skills": skills.group(1).strip() if skills else "",
             "years": int(yrs.group(1)) if yrs else 0}
 
