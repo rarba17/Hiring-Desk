@@ -69,6 +69,9 @@ Split deploy (recommended): static frontend + container backend.
   env `VITE_API_URL=https://<your-backend>`. Local dev needs nothing (Vite proxies to :8000).
 - Uploads and JD saves ride the image/disk and are ephemeral on redeploy; treat the
   deployed box as a demo, keep seeds in git.
+- **Render free tier sleeps after 15 min idle.** Workarounds shipped: `.github/workflows/keep-awake.yml`
+  pings `/health` every 10 min (set `RENDER_API_URL` repo variable), and the UI retries
+  idempotent reads once across a cold start. Real fix: Starter plan or Fly.io.
 
 ## Limitations
 - Mock resumes/calendars/emails only, no real Gmail/Outlook.

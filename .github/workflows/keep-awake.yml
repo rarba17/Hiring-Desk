@@ -1,0 +1,26 @@
+# Keeps the Render free-tier backend from sleeping (15 min idle spin-down).
+# Pings /health every 10 minutes. Set RENDER_API_URL as a repo Variable
+# (Settings -> Secrets and variables -> Actions -> Variables), e.g.
+# https://hiring-worker-api.onrender.com. Manual runs supported.
+# NOTE: this is a demo workaround. Real fix: Render Starter ($7/mo) or Fly.io.
+name: keep-awake
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Wake backend
+        run: |
+          for i in 1 2 3; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 90 "${{ vars.RENDER_API_URL }}/health") && echo "attempt $i: $code"
+            [ "$code" = "200" ] && exit 0
+            sleep 30
+          done
+          echo "backend did not answer; leaving workflow green (cold start on next visit)"
+          exit 0

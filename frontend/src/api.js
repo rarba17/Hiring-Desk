@@ -3,6 +3,21 @@
 const BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
 
 async function req(path, opts = {}) {
+  try {
+    return await once(path, opts);
+  } catch (e) {
+    // Cold-start cover: Render free tier can take ~60s to wake. Retry idempotent
+    // reads once after a wait; writes fail fast so runs are never duplicated.
+    const safe = !opts.method || opts.method === 'GET';
+    if (safe && e instanceof TypeError) {
+      await new Promise((r) => setTimeout(r, 45000));
+      return once(path, opts);
+    }
+    throw e;
+  }
+}
+
+async function once(path, opts = {}) {
   const r = await fetch(`${BASE}${path}`, opts);
   if (!r.ok) throw new Error(await r.text());
   return r.json();
