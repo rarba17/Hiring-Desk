@@ -18,12 +18,22 @@ async function req(path, opts = {}) {
 }
 
 async function once(path, opts = {}) {
-  const r = await fetch(`${BASE}${path}`, opts);
+  let r;
+  try {
+    r = await fetch(`${BASE}${path}`, opts);
+  } catch (e) {
+    // TypeError === network-level failure: wrong VITE_API_URL, backend asleep,
+    // or CORS rejection (backend CORS_ORIGINS missing the Vercel origin).
+    throw new TypeError(`Failed to fetch ${BASE || '(same-origin)'}${path} — check VITE_API_URL, backend is awake, and CORS_ORIGINS includes ${window.location.origin}`);
+  }
   if (!r.ok) throw new Error(await r.text());
   return r.json();
 }
 
 export const api = {
+  base() {
+    return BASE || window.location.origin;
+  },
   runTask(goal) {
     return req('/hiring/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ goal }) });
   },

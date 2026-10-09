@@ -22,7 +22,7 @@ services:
       - key: JDS_DIR
         value: jds
       - key: CORS_ORIGINS
-        value: http://localhost:5173
+        value: http://localhost:5173,https://hiring-desk-nine.vercel.app
       - key: OPENAI_API_KEY
         sync: false
       - key: GMAIL_USER
