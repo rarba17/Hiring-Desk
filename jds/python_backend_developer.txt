@@ -1,0 +1,10 @@
+• Role Summary: Build data-intensive backend web services, API layers, and automation workflows.
+• Core Responsibilities:
+	• Architect and optimize distributed backend applications and asynchronous workers.
+	• Collaborate with frontend and data science teams to deliver clean data endpoints.
+	• Conduct performance tuning, profiling, and debugging of production applications.
+• Technical Stack:
+	• Languages: Python
+	• Frameworks: Django, FastAPl, Flask, Celery
+	• Databases: PostgreSQL, Redis, MongoDB
+	• Tools/Infra: PyTest, Docker, AWS (EC2, Lambda), Git

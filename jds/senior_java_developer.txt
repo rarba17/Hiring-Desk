@@ -1,0 +1,10 @@
+• Role Summary: Design, build, and maintain high-performance, fault-tolerant enterprise applications.
+• Core Responsibilities:
+	• Develop scalable microservices using Spring Boot and Java 17+.
+	• Optimize database queries, transaction management, and caching strategies.
+	• Implement secure RESTful APIs and integrate with third-party ecosystems.
+• Technical Stack:
+	• Languages: Java, SQL
+	• Frameworks: Spring Boot, Spring Cloud, Hibernate / JPA
+	• Databases: PostgreSQL, MySQL, Oracle
+	• Tools/Infra: Docker, Kubernetes, Maven, JUnit, Jenkins

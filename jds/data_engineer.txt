@@ -1,3 +1,10 @@
-Role: data engineer (Backend, AI)
-Requirements: Python, FastAPI, LangChain, LLM apps, AWS, Postgres, pytest.
-Must have: 3+ years building APIs.
+• Role Summary: Design, implement, and monitor robust data architecture and pipelines for analytical workloads.
+• Core Responsibilities:
+	• Build batch and real-time ETL/ELT pipelines ingesting diverse data streams.
+	• Optimize data storage, partitioning, and indexing configurations for analytics.
+	• Maintain data warehouses and lakehouses ensuring top-tier data quality and schema validation.
+• Technical Stack:
+	• Languages: Python, SQL, Scala
+	• Big Data Frameworks: Apache Spark, Apache Flink, Hadoop
+	• Orchestration: Apache Airflow, Prefect
+	• Data Warehouses: Snowflake, Databricks, Google BigQuery

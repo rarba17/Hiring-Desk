@@ -1,0 +1,37 @@
+==================================================
+MICHAEL GARCIA
+Java Developer
+==================================================
+
+CONTACT DETAILS
+--------------------------------------------------
+Email: michael.garcia@example.com
+Phone: +1-555-488-1035
+Location: San Francisco Bay Area
+
+EXECUTIVE SUMMARY
+--------------------------------------------------
+Highly skilled Java Developer with extensive experience designing, developing, and maintaining enterprise-grade applications. Proficient in microservices architecture, Spring framework, and cloud deployments.
+
+TECHNICAL SKILLS
+--------------------------------------------------
+Java 17, Spring Boot, Hibernate, Microservices, REST APIs, Docker, AWS, JUnit, SQL, Git
+
+PROFESSIONAL EXPERIENCE
+--------------------------------------------------
+Senior Java Engineer | ByteSize
+2023 - Present
+- Designed and implemented high-throughput microservices using Spring Boot, reducing processing latency by 25%.
+- Migrated legacy monolithic applications to AWS cloud using Docker and Kubernetes.
+- Optimized SQL queries and database schemas, resulting in a 40% improvement in API response times.
+
+Java Backend Developer | CloudScale
+2020 - 2023
+- Developed RESTful APIs supporting mobile and web application clients.
+- Wrote comprehensive unit and integration tests using JUnit and Mockito, increasing code coverage to 92%.
+- Collaborated with cross-functional teams in an Agile environment to deliver bi-weekly sprints.
+
+EDUCATION
+--------------------------------------------------
+Bachelor of Science in Computer Science
+National Engineering University | Graduated 2020

@@ -1,0 +1,10 @@
+• Role Summary: Engineer highly concurrent, low-latency infrastructure services and networking tools.
+• Core Responsibilities:
+	• Write clean, idiomatic, and highly performant Go code maximizing goroutines and channels.
+	• Maintain system performance, minimizing resource footprints and latency.
+	• Build cloud-native components for containerized mesh architectures.
+• Technical Stack:
+	• Languages: Go (Golang), Protobuf
+	• Frameworks/Libraries: Gin, gRPC, Go-kit
+	• Databases: Redis, Cassandra, PostgreSQL
+	• Tools/Infra: Kubernetes, Prometheus, Docker, Linux Internals

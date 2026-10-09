@@ -1,0 +1,37 @@
+==================================================
+JESSICA MARTIN
+Data Engineer
+==================================================
+
+CONTACT DETAILS
+--------------------------------------------------
+Email: jessica.martin@example.com
+Phone: +1-555-165-7304
+Location: San Francisco Bay Area
+
+EXECUTIVE SUMMARY
+--------------------------------------------------
+Results-driven Data Engineer experienced in building scalable ETL pipelines, data warehouses, and real-time streaming architectures. Expert in transforming raw data into actionable insights.
+
+TECHNICAL SKILLS
+--------------------------------------------------
+Python, SQL, Apache Spark, Apache Kafka, Hadoop, AWS (EMR, Redshift, S3), Airflow, Snowflake, ETL
+
+PROFESSIONAL EXPERIENCE
+--------------------------------------------------
+Senior Data Engineer | ByteSize
+2023 - Present
+- Designed and optimized data lake and warehousing architectures using Snowflake and AWS Redshift.
+- Constructed robust ETL/ELT pipelines processing multi-terabyte datasets using Apache Spark and Airflow.
+- Streamlined data ingestion from streaming sources using Apache Kafka, minimizing data lag.
+
+Data Engineer | InnoSystems
+2020 - 2023
+- Maintained and optimized batch processing pipelines inside Hadoop clusters.
+- Wrote complex SQL transformations and analytical queries to support business intelligence reporting.
+- Monitored pipeline health and quickly resolved data quality anomalies.
+
+EDUCATION
+--------------------------------------------------
+Bachelor of Science in Computer Science
+National Engineering University | Graduated 2020
