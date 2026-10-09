@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: richard.johnson@example.com
 Phone: +1-555-512-6559
 Location: San Francisco Bay Area
+Experience: 5 years in data development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Results-driven Data Engineer experienced in building scalable ETL pipelines, dat
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Python, SQL, Apache Spark, Apache Kafka, Hadoop, AWS (EMR, Redshift, S3), Airflow, Snowflake, ETL
+AWS, Hadoop, Scala, dbt
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Data Engineer | CloudScale
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Bachelor of Technology in Information Technology
 Tech Institute | Graduated 2020

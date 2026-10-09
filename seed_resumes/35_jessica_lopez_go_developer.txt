@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: jessica.lopez@example.com
 Phone: +1-555-533-7735
 Location: San Francisco Bay Area
+Experience: 9 years in go development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Performance-focused Go Developer with a strong background in concurrency, distri
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Go (Golang), gRPC, Protobuf, Docker, Kubernetes, PostgreSQL, Redis, AWS, Kafka, Linux
+gRPC, CI/CD, Protobuf, PostgreSQL, Kubernetes
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Go Software Engineer | ByteSize
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Master of Science in Software Engineering
 State University | Graduated 2020

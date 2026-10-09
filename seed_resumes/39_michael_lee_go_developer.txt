@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: michael.lee@example.com
 Phone: +1-555-653-1241
 Location: San Francisco Bay Area
+Experience: 4 years in go development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Performance-focused Go Developer with a strong background in concurrency, distri
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Go (Golang), gRPC, Protobuf, Docker, Kubernetes, PostgreSQL, Redis, AWS, Kafka, Linux
+Prometheus, Go (Golang), Kafka, AWS, gRPC, Linux, Apache Spark, CI/CD
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Go Software Engineer | ApexSolutions
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Bachelor of Technology in Information Technology
 Tech Institute | Graduated 2020

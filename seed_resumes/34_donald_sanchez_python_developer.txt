@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: donald.sanchez@example.com
 Phone: +1-555-584-7669
 Location: San Francisco Bay Area
+Experience: 2 years in python development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Adaptable Python Developer specialized in building scalable web applications and
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Python, Django, Flask, FastAPI, PostgreSQL, Celery, Redis, Docker, AWS, Git
+Python, MongoDB, Redis, Django, PostgreSQL, FastAPI
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------

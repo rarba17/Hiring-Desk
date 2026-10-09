@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: jessica.martin@example.com
 Phone: +1-555-623-2894
 Location: San Francisco Bay Area
+Experience: 9 years in data development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Results-driven Data Engineer experienced in building scalable ETL pipelines, dat
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Python, SQL, Apache Spark, Apache Kafka, Hadoop, AWS (EMR, Redshift, S3), Airflow, Snowflake, ETL
+Airflow, Hadoop, dbt, Kafka, Scala, BigQuery, AWS, SQL
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Data Engineer | InnoSystems
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Master of Science in Software Engineering
 Tech Institute | Graduated 2020

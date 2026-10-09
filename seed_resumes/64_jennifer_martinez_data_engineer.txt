@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: jennifer.martinez@example.com
 Phone: +1-555-940-4728
 Location: San Francisco Bay Area
+Experience: 3 years in data development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Results-driven Data Engineer experienced in building scalable ETL pipelines, dat
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Python, SQL, Apache Spark, Apache Kafka, Hadoop, AWS (EMR, Redshift, S3), Airflow, Snowflake, ETL
+Snowflake, Hadoop, AWS, BigQuery, Kafka, Airflow
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------

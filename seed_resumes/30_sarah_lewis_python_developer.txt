@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: sarah.lewis@example.com
 Phone: +1-555-629-8397
 Location: San Francisco Bay Area
+Experience: 7 years in python development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Adaptable Python Developer specialized in building scalable web applications and
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Python, Django, Flask, FastAPI, PostgreSQL, Celery, Redis, Docker, AWS, Git
+Redis, MongoDB, AWS, Docker
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Python Engineer | CloudScale
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Bachelor of Technology in Information Technology
 Tech Institute | Graduated 2020

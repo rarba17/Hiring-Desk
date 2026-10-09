@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: joseph.smith@example.com
 Phone: +1-555-859-5506
 Location: San Francisco Bay Area
+Experience: 2 years in java development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Highly skilled Java Developer with extensive experience designing, developing, a
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Java 17, Spring Boot, Hibernate, Microservices, REST APIs, Docker, AWS, JUnit, SQL, Git
+Docker, Kafka, PostgreSQL
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------

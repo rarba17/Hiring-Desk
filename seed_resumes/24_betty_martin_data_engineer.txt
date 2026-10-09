@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: betty.martin@example.com
 Phone: +1-555-303-3504
 Location: San Francisco Bay Area
+Experience: 9 years in data development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Results-driven Data Engineer experienced in building scalable ETL pipelines, dat
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Python, SQL, Apache Spark, Apache Kafka, Hadoop, AWS (EMR, Redshift, S3), Airflow, Snowflake, ETL
+Apache Spark, Hadoop, Kafka, dbt
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Data Engineer | ApexSolutions
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Bachelor of Technology in Information Technology
 Tech Institute | Graduated 2020

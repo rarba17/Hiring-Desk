@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: thomas.lee@example.com
 Phone: +1-555-368-3647
 Location: San Francisco Bay Area
+Experience: 2 years in data development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Results-driven Data Engineer experienced in building scalable ETL pipelines, dat
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Python, SQL, Apache Spark, Apache Kafka, Hadoop, AWS (EMR, Redshift, S3), Airflow, Snowflake, ETL
+Kafka, Airflow, SQL, dbt, Hadoop, Flink, BigQuery, Python
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Data Engineer | InnoSystems
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Master of Science in Software Engineering
 National Engineering University | Graduated 2020

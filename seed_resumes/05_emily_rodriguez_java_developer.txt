@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: emily.rodriguez@example.com
 Phone: +1-555-928-1106
 Location: San Francisco Bay Area
+Experience: 8 years in java development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Highly skilled Java Developer with extensive experience designing, developing, a
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Java 17, Spring Boot, Hibernate, Microservices, REST APIs, Docker, AWS, JUnit, SQL, Git
+Gradle, Spring Boot, Kubernetes, AWS, Maven
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Java Backend Developer | ByteSize
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Master of Science in Software Engineering
 National Engineering University | Graduated 2020

@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: robert.perez@example.com
 Phone: +1-555-333-5741
 Location: San Francisco Bay Area
+Experience: 10 years in python development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Adaptable Python Developer specialized in building scalable web applications and
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Python, Django, Flask, FastAPI, PostgreSQL, Celery, Redis, Docker, AWS, Git
+Redis, PyTest, Git, PostgreSQL, FastAPI, Docker
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------

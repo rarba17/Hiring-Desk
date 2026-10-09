@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: michael.johnson@example.com
 Phone: +1-555-698-8811
 Location: San Francisco Bay Area
+Experience: 6 years in data development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Results-driven Data Engineer experienced in building scalable ETL pipelines, dat
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Python, SQL, Apache Spark, Apache Kafka, Hadoop, AWS (EMR, Redshift, S3), Airflow, Snowflake, ETL
+Hadoop, Snowflake, Python, AWS, Airflow, Kafka, dbt, Flink
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Data Engineer | TechCorp
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Master of Science in Software Engineering
 State University | Graduated 2020

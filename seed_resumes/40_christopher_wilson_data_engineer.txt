@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: christopher.wilson@example.com
 Phone: +1-555-597-8886
 Location: San Francisco Bay Area
+Experience: 11 years in data development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Results-driven Data Engineer experienced in building scalable ETL pipelines, dat
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Python, SQL, Apache Spark, Apache Kafka, Hadoop, AWS (EMR, Redshift, S3), Airflow, Snowflake, ETL
+dbt, Hadoop, Flink, Snowflake, Python, BigQuery
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------

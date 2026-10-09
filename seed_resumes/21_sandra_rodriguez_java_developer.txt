@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: sandra.rodriguez@example.com
 Phone: +1-555-666-1188
 Location: San Francisco Bay Area
+Experience: 10 years in java development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Highly skilled Java Developer with extensive experience designing, developing, a
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Java 17, Spring Boot, Hibernate, Microservices, REST APIs, Docker, AWS, JUnit, SQL, Git
+Maven, Kafka, Spring Boot, Kubernetes, Gradle, Microservices, JUnit
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Java Backend Developer | ByteSize
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Bachelor of Technology in Information Technology
 Silicon Valley College | Graduated 2020

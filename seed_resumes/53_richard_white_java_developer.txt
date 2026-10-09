@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: richard.white@example.com
 Phone: +1-555-666-3546
 Location: San Francisco Bay Area
+Experience: 3 years in java development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Highly skilled Java Developer with extensive experience designing, developing, a
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Java 17, Spring Boot, Hibernate, Microservices, REST APIs, Docker, AWS, JUnit, SQL, Git
+Spring Boot, Microservices, JUnit, Maven, Flink, Java
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Java Backend Developer | CloudScale
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Master of Science in Software Engineering
 Tech Institute | Graduated 2020

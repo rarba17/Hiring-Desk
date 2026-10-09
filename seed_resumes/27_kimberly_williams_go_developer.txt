@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: kimberly.williams@example.com
 Phone: +1-555-187-8962
 Location: San Francisco Bay Area
+Experience: 8 years in go development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Performance-focused Go Developer with a strong background in concurrency, distri
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Go (Golang), gRPC, Protobuf, Docker, Kubernetes, PostgreSQL, Redis, AWS, Kafka, Linux
+gRPC, Kafka, Prometheus, Go (Golang), Docker, CI/CD, Kubernetes
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Go Software Engineer | ApexSolutions
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Bachelor of Technology in Information Technology
 Tech Institute | Graduated 2020

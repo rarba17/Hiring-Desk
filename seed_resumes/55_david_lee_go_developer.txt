@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: david.lee@example.com
 Phone: +1-555-533-5533
 Location: San Francisco Bay Area
+Experience: 6 years in go development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Performance-focused Go Developer with a strong background in concurrency, distri
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Go (Golang), gRPC, Protobuf, Docker, Kubernetes, PostgreSQL, Redis, AWS, Kafka, Linux
+PostgreSQL, Go (Golang), Kafka
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------

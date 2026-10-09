@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: karen.davis@example.com
 Phone: +1-555-995-2235
 Location: San Francisco Bay Area
+Experience: 8 years in python development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Adaptable Python Developer specialized in building scalable web applications and
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Python, Django, Flask, FastAPI, PostgreSQL, Celery, Redis, Docker, AWS, Git
+PostgreSQL, MongoDB, Python, Django, Git, Celery, FastAPI, Redis
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Python Engineer | ByteSize
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Master of Science in Software Engineering
 State University | Graduated 2020

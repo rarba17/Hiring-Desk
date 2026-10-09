@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: matthew.moore@example.com
 Phone: +1-555-559-3296
 Location: San Francisco Bay Area
+Experience: 12 years in java development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Highly skilled Java Developer with extensive experience designing, developing, a
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Java 17, Spring Boot, Hibernate, Microservices, REST APIs, Docker, AWS, JUnit, SQL, Git
+PostgreSQL, JUnit, AWS
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------

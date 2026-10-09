@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: anthony.johnson@example.com
 Phone: +1-555-693-9883
 Location: San Francisco Bay Area
+Experience: 10 years in go development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Performance-focused Go Developer with a strong background in concurrency, distri
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Go (Golang), gRPC, Protobuf, Docker, Kubernetes, PostgreSQL, Redis, AWS, Kafka, Linux
+Prometheus, Protobuf, Linux
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------

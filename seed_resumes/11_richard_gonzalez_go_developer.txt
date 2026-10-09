@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: richard.gonzalez@example.com
 Phone: +1-555-384-8428
 Location: San Francisco Bay Area
+Experience: 6 years in go development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Performance-focused Go Developer with a strong background in concurrency, distri
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Go (Golang), gRPC, Protobuf, Docker, Kubernetes, PostgreSQL, Redis, AWS, Kafka, Linux
+Linux, Protobuf, PostgreSQL, AWS, Go (Golang), AWS
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Go Software Engineer | DataDynamics
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Master of Science in Software Engineering
 Silicon Valley College | Graduated 2020

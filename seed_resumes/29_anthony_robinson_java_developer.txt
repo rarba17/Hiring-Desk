@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: anthony.robinson@example.com
 Phone: +1-555-652-4295
 Location: San Francisco Bay Area
+Experience: 11 years in java development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Highly skilled Java Developer with extensive experience designing, developing, a
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Java 17, Spring Boot, Hibernate, Microservices, REST APIs, Docker, AWS, JUnit, SQL, Git
+Kafka, Kubernetes, AWS, Hibernate, Microservices
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Java Backend Developer | DevStream
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Master of Science in Software Engineering
 Silicon Valley College | Graduated 2020

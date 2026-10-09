@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: karen.moore@example.com
 Phone: +1-555-227-7201
 Location: San Francisco Bay Area
+Experience: 7 years in data development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Results-driven Data Engineer experienced in building scalable ETL pipelines, dat
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Python, SQL, Apache Spark, Apache Kafka, Hadoop, AWS (EMR, Redshift, S3), Airflow, Snowflake, ETL
+Airflow, AWS, dbt, Snowflake, Python, Apache Spark, BigQuery, Flink
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Data Engineer | AlphaFlow
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Master of Science in Software Engineering
 Silicon Valley College | Graduated 2020

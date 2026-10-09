@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: steven.johnson@example.com
 Phone: +1-555-825-8144
 Location: San Francisco Bay Area
+Experience: 5 years in java development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Highly skilled Java Developer with extensive experience designing, developing, a
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Java 17, Spring Boot, Hibernate, Microservices, REST APIs, Docker, AWS, JUnit, SQL, Git
+Java, Hibernate, AWS, Kafka, Gradle, Spring Boot, Maven
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
@@ -33,5 +34,5 @@ Java Backend Developer | AlphaFlow
 
 EDUCATION
 --------------------------------------------------
-Bachelor of Science in Computer Science
+Bachelor of Technology in Information Technology
 Tech Institute | Graduated 2020

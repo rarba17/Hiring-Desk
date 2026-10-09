@@ -8,6 +8,7 @@ CONTACT DETAILS
 Email: elizabeth.brown@example.com
 Phone: +1-555-467-6635
 Location: San Francisco Bay Area
+Experience: 11 years in go development
 
 EXECUTIVE SUMMARY
 --------------------------------------------------
@@ -15,7 +16,7 @@ Performance-focused Go Developer with a strong background in concurrency, distri
 
 TECHNICAL SKILLS
 --------------------------------------------------
-Go (Golang), gRPC, Protobuf, Docker, Kubernetes, PostgreSQL, Redis, AWS, Kafka, Linux
+Linux, CI/CD, Kafka
 
 PROFESSIONAL EXPERIENCE
 --------------------------------------------------
