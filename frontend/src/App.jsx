@@ -31,7 +31,8 @@ function Console() {
             <h1>Hiring desk</h1>
           </div>
           <div className="masthead-side">
-            <span className={`seal ${ok ? 'ok' : ''}`}>{ok === null ? 'Checking line' : ok ? 'Line open' : 'Line down — backend unreachable'}</span>
+            <span className={`seal ${ok ? 'ok' : ''}`} title={`API: ${api.base()}`}>{ok === null ? 'Checking line' : ok ? 'Line open' : 'Line down — backend unreachable'}</span>
+            {ok === false && <small className="msg" style={{ display: 'block', maxWidth: 340, wordBreak: 'break-all' }}>API: {api.base()}</small>}
             <span>
               {ok === false && <button type="button" className="backlink" onClick={recheck}>Retry</button>}
               {' '}<a className="backlink" href="#/">Overview</a>
