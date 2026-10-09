@@ -192,6 +192,7 @@ details summary { cursor: pointer; font-weight: 600; font-size: 14px; margin-top
 .desk-note { color: #a9b5a6; font-size: 13px; max-width: 70ch; }
 .masthead-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
 .backlink { color: #a9b5a6; font-size: 13px; }
+button.backlink { background: none; border: 0; padding: 0; margin: 0 8px 0 0; cursor: pointer; text-decoration: underline; font-weight: 400; }
 
 /* Anchor buttons share the desk button voice */
 .btn-ink, .btn-paper {

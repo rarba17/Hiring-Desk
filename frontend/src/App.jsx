@@ -11,7 +11,17 @@ function Console() {
   const [ok, setOk] = useState(null);
   const [tick, setTick] = useState(0);
   const bump = () => setTick((t) => t + 1);
-  useEffect(() => { api.health().then(() => setOk(true)).catch(() => setOk(false)); }, []);
+  useEffect(() => {
+    let dead = false;
+    const timer = setTimeout(() => { if (!dead) setOk(false); }, 75000);
+    api.health().then(() => { if (!dead) { clearTimeout(timer); setOk(true); } })
+      .catch(() => { if (!dead) { clearTimeout(timer); setOk(false); } });
+    return () => { dead = true; clearTimeout(timer); };
+  }, []);
+  const recheck = () => {
+    setOk(null);
+    api.health().then(() => setOk(true)).catch(() => setOk(false));
+  };
   return (
     <div className="app">
       <header className="masthead">
@@ -21,8 +31,11 @@ function Console() {
             <h1>Hiring desk</h1>
           </div>
           <div className="masthead-side">
-            <span className={`seal ${ok ? 'ok' : ''}`}>{ok === null ? 'Checking line' : ok ? 'Line open' : 'Line down — start uvicorn :8000'}</span>
-            <a className="backlink" href="#/">Overview</a>
+            <span className={`seal ${ok ? 'ok' : ''}`}>{ok === null ? 'Checking line' : ok ? 'Line open' : 'Line down — backend unreachable'}</span>
+            <span>
+              {ok === false && <button type="button" className="backlink" onClick={recheck}>Retry</button>}
+              {' '}<a className="backlink" href="#/">Overview</a>
+            </span>
           </div>
         </div>
       </header>

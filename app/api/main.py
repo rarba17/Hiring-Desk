@@ -4,28 +4,39 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 load_dotenv()
 
-from app.agent.graph import build_graph
 from app.agent.tools_ats import ats_list
 from app.agent.tools_resumes import save_jd, load_jd, list_jds, list_resumes, delete_jd, read_jd_exact
 from app.api.store import new_task_id, save_task, get_task, log_trace
 from app.config import ATS_DB, JDS_DIR, RESUME_DIR
 
+_graph = None
+
+def get_graph():
+    """Built on first task, not at import: keeps /health instant on cold boot."""
+    global _graph
+    if _graph is None:
+        from app.agent.graph import build_graph
+        _graph = build_graph()
+    return _graph
+
 app = FastAPI(title="Hiring Worker", version="0.1.0")
 try:
     import os
     from fastapi.middleware.cors import CORSMiddleware
-    # CORS_ORIGINS="https://hiring-desk.vercel.app,http://localhost:5173"
-    origins = [o.strip() for o in os.getenv(
+    # CORS_ORIGINS="https://hiring-desk-nine.vercel.app,http://localhost:5173"
+    # Comma-separated. Vercel preview URLs (*.vercel.app) are allowed via regex
+    # so previews don't all need to be listed manually.
+    origins = [o.strip().rstrip("/") for o in os.getenv(
         "CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",") if o.strip()]
     app.add_middleware(
         CORSMiddleware,
         allow_origins=origins,
+        allow_origin_regex=r"https://.*\.vercel\.app",
         allow_methods=["*"],
         allow_headers=["*"],
     )
 except Exception:
     pass
-graph = build_graph()
 
 class GoalRequest(BaseModel):
     goal: str
@@ -38,13 +49,13 @@ class JDRequest(BaseModel):
     text: str
 
 def _run(goal: str, approval: str = "") -> dict:
-    out = graph.invoke({"goal": goal, "retries": 0, "trace": [], "approval_decision": approval})
+    out = get_graph().invoke({"goal": goal, "retries": 0, "trace": [], "approval_decision": approval})
     log_trace(goal, out)
     return out
 
 @app.get("/health")
 def health():
-    return {"ok": True}
+    return {"ok": True, "graph": "ready" if _graph is not None else "lazy"}
 
 @app.post("/hiring/tasks")
 def create_task(req: GoalRequest):
